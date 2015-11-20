@@ -10,8 +10,6 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -48,8 +46,6 @@ public abstract class CoreActivity extends AppCompatActivity implements Serializ
     @Override
     public void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     public boolean isConnected() {
