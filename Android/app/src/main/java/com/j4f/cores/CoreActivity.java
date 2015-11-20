@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -40,7 +41,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
 
-public abstract class CoreActivity extends Activity implements Serializable, View.OnClickListener {
+public abstract class CoreActivity extends AppCompatActivity implements Serializable, View.OnClickListener {
     private static final long serialVersionUID = -6161155222390513466L;
     private static String TAG = "J4F";
 
