@@ -47,24 +47,21 @@ public class MainActivity extends CoreActivity
         tabHost = (MaterialTabHost) this.findViewById(R.id.materialTabHost);
         pager = (ViewPager) this.findViewById(R.id.viewpager);
 
+
+
         // init view pager
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                // when user do a swipe the selected tab change
                 tabHost.setSelectedNavigationItem(position);
             }
         });
 
         // insert all tabs from pagerAdapter data
         for (int i = 0; i < adapter.getCount(); i++) {
-            tabHost.addTab(
-                    tabHost.newTab()
-                            .setText(adapter.getPageTitle(i))
-                            .setTabListener(this)
-            );
+            tabHost.addTab(tabHost.newTab().setText(adapter.getPageTitle(i)).setTabListener(this));
 
         }
 
@@ -72,14 +69,12 @@ public class MainActivity extends CoreActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
