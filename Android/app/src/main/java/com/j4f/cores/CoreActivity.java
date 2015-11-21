@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.j4f.application.MyApplication;
+import com.j4f.configs.Configs;
 import com.j4f.interfaces.ImageRequestListener;
 import com.j4f.interfaces.JSONArrayRequestListener;
 import com.j4f.interfaces.JSONObjectRequestListener;
@@ -181,9 +182,7 @@ public abstract class CoreActivity extends AppCompatActivity implements Serializ
                 .append("]: ").append(data).toString());
     }
 
-    public String TAG_JSONOBJ_REQUEST = "jsonobject_request";
-    public String TAG_JSONARR_REQUEST = "jsonarrayobject_request";
-    public String TAG_STRING_REQUEST = "string_request";
+
 
     public void cancelAllRequestWithTag(String tag) {
         MyApplication.getInstance().getRequestQueue().cancelAll(tag);
@@ -203,7 +202,7 @@ public abstract class CoreActivity extends AppCompatActivity implements Serializ
                 mListener.onError(error);
             }
         });
-        MyApplication.getInstance().addToRequestQueue(jsonObjRequest, TAG_JSONOBJ_REQUEST);
+        MyApplication.getInstance().addToRequestQueue(jsonObjRequest, Configs.TAG_JSONOBJ_REQUEST);
     }
 
     public void makeJsonArrayRequest(String url, final JSONArrayRequestListener mListener) {
@@ -220,7 +219,7 @@ public abstract class CoreActivity extends AppCompatActivity implements Serializ
                 mListener.onError(error);
             }
         });
-        MyApplication.getInstance().addToRequestQueue(jsonArrRequest, TAG_JSONARR_REQUEST);
+        MyApplication.getInstance().addToRequestQueue(jsonArrRequest, Configs.TAG_JSONARR_REQUEST);
     }
 
     public void makeStringRequest(String url, final StringRequestListener mListener) {
@@ -237,7 +236,7 @@ public abstract class CoreActivity extends AppCompatActivity implements Serializ
                 mListener.onErrorResponse(error);
             }
         });
-        MyApplication.getInstance().addToRequestQueue(stringRequest, TAG_STRING_REQUEST);
+        MyApplication.getInstance().addToRequestQueue(stringRequest, Configs.TAG_STRING_REQUEST);
     }
 
     public void makeImageRequest(String url, final ImageRequestListener mListener) {
