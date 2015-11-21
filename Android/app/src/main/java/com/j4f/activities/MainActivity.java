@@ -20,7 +20,7 @@ import com.j4f.R;
 import com.j4f.cores.CoreActivity;
 import com.j4f.fragments.CategoriesFragment;
 import com.j4f.fragments.QuestionsFragment;
-import com.j4f.fragments.TutorsFragment;
+import com.j4f.fragments.OffersFragment;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -114,7 +114,7 @@ public class MainActivity extends CoreActivity
                 case 1:
                     return QuestionsFragment.getInstance(MainActivity.this);
                 case 2:
-                    return TutorsFragment.getInstance(MainActivity.this);
+                    return OffersFragment.getInstance(MainActivity.this);
                 default:
                     break;
             }

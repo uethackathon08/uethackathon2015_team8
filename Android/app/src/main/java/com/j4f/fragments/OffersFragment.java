@@ -12,10 +12,10 @@ import com.j4f.cores.CoreFragment;
 /**
  * Created by hunter on 11/21/2015.
  */
-public class TutorsFragment extends CoreFragment {
+public class OffersFragment extends CoreFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tutors, container, false);
+        View view = inflater.inflate(R.layout.fragment_offers, container, false);
         initViews(view);
         initListener();
         initModels();
@@ -47,15 +47,15 @@ public class TutorsFragment extends CoreFragment {
 
     public static final long serialVersionUID = 6036846677812555352L;
     public static CoreActivity mActivity;
-    public static TutorsFragment mInstance;
-    public static TutorsFragment getInstance(CoreActivity activity) {
+    public static OffersFragment mInstance;
+    public static OffersFragment getInstance(CoreActivity activity) {
         if (mInstance == null) {
-            mInstance = new TutorsFragment();
+            mInstance = new OffersFragment();
         }
         mActivity = activity;
         return mInstance;
     }
-    private TutorsFragment() {
+    private OffersFragment() {
 
     }
 }
