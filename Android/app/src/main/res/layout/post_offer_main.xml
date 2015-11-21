@@ -72,6 +72,8 @@
                 android:id="@+id/timeslot_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="25dp">
 
@@ -111,8 +113,9 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
-                android:hint="+84 123 456 789"
+                android:hint="0123 456 789"
                 android:textColorHint="@color/hint"
+                android:inputType="phone"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:background="@android:color/transparent"/>

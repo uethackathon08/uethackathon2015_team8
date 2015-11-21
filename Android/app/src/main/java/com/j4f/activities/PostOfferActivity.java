@@ -1,12 +1,15 @@
 package com.j4f.activities;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -101,16 +104,30 @@ public class PostOfferActivity extends CoreActivity {
                 if (b) {
                     mAddMoreTimeSlotButton.setVisibility(View.VISIBLE);
                     mTimeSlotListView.setVisibility(View.VISIBLE);
-
+                    mCalendar = Calendar.getInstance();
                     showDatePicker();
-
-
-
-//                    showToastLong("checked");
                 } else {
                     mTimeSlotListView.setVisibility(View.GONE);
                     mAddMoreTimeSlotButton.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        mTimeSlotListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mCalendar = mTimeSlotList.get(i).getDatetime();
+                changeTimeSlot(i);
+            }
+        });
+
+        mTimeSlotListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mTimeSlotList.remove(i);
+                mTimeSlotArrayAdapter.notifyDataSetChanged();
+                setListViewHeightBasedOnChildren(mTimeSlotListView);
+                return true;
             }
         });
     }
@@ -150,12 +167,34 @@ public class PostOfferActivity extends CoreActivity {
                 showDatePicker();
                 break;
             case R.id.post_button:
+                String title = mTitleText.getText().toString();
+                String content = mDescriptionText.getText().toString();
+                String contact = mContactText.getText().toString();
+
+                if (title == null || title.length() < 10) {
+                    alert("Title required more than 10 characters");
+                    break;
+                }
+                if (content == null || content.length() < 10) {
+                    alert("Description required more than 10 characters");
+                    break;
+                }
+
                 String url = BASE_URL + "offer/new";
                 Map<String, String> params = new HashMap<>();
                 params.put("tags", "tag1");
-                params.put("title", "Test");
-                params.put("content", "content");
+                params.put("title", title);
+                params.put("content", content);
                 params.put("users_id", MyApplication.USER_ID);
+                if (contact != null) params.put("phone", contact);
+
+                if (mTimeSlotList.size() > 0) {
+                    String time = "";
+                    for (TimeSlot timeSlot : mTimeSlotList) {
+                        time += timeSlot.getDatetime().getTimeInMillis() + ";";
+                    }
+                    params.put("time", time);
+                }
 
                 CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
                     @Override
@@ -176,9 +215,45 @@ public class PostOfferActivity extends CoreActivity {
         }
     }
 
-    private void showDatePicker() {
-        mCalendar = Calendar.getInstance();
+    private void alert(final String title) {
+        AlertDialog alertDialog = new AlertDialog.Builder(PostOfferActivity.this).create();
+        alertDialog.setTitle(title);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
 
+    private void changeTimeSlot(final int timeSlotIndex) {
+        new DatePickerDialog(PostOfferActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                mCalendar.set(Calendar.YEAR, year);
+                mCalendar.set(Calendar.MONTH, monthOfYear);
+                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                new TimePickerDialog(PostOfferActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        mCalendar.set(Calendar.HOUR_OF_DAY, i);
+                        mCalendar.set(Calendar.MINUTE, i1);
+
+                        mTimeSlotList.set(timeSlotIndex, new TimeSlot(TimeUtils.formatDate(mCalendar),
+                                TimeUtils.formatTime(mCalendar), mCalendar));
+                        mTimeSlotArrayAdapter.notifyDataSetChanged();
+                    }
+                }, mCalendar.
+                        get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), false).show();
+            }
+        }, mCalendar
+                .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+                mCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void showDatePicker() {
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
