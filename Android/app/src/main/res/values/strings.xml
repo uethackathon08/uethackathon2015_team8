@@ -26,6 +26,10 @@
     <string name="tab_categories">Categories</string>
     <string name="tab_questions">Questions</string>
     <string name="tab_tutors">Tutors</string>
+<<<<<<< HEAD
     <string name="title_activity_question_details">QuestionDetailsActivity</string>
 
+=======
+    <string name="title_activity_post_offer">PostOfferActivity</string>
+>>>>>>> fd5833065430a1031375bc7d7b0e34da908fa22f
 </resources>
