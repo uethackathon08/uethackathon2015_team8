@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.j4f.R;
 import com.j4f.application.Utils;
+import com.j4f.configs.Configs;
 import com.j4f.cores.CoreActivity;
 import com.j4f.interfaces.ImageRequestListener;
 import com.j4f.models.Category;
@@ -42,7 +43,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.DataOb
         final Category c = dataSet.get(position);
         holder.name.setText(c.getName());
         holder.info.setText(c.getNumberOfQuestion() + " Questions • " + c.getNumberOfTutor() + " Offers");
-        context.makeImageRequest(c.getIconLink(), new ImageRequestListener() {
+        context.makeImageRequest(Configs.BASE_URL + c.getIconLink(), new ImageRequestListener() {
             @Override
             public void onBefore() {
                 holder.icon.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));

@@ -30,7 +30,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.GetStartedActivity"
-            android:theme="@style/ThongTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,10 +39,10 @@
         </activity>
         <activity
             android:name=".activities.SigninActivity"
-            android:theme="@style/ThongTheme"></activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.SignupActivity"
-            android:theme="@style/ThongTheme"></activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
