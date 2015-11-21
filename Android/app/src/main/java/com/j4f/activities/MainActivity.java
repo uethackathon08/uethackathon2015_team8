@@ -43,9 +43,6 @@ public class MainActivity extends CoreActivity
         initListeners();
         initAnimations();
 
-
-        startActivity(new Intent(this, PostOfferActivity.class));
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

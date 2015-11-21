@@ -14,4 +14,5 @@
     <color name="lightgray">#9E9E9E</color>
     <color name="gray">#3EA99F</color>
     <color name="green">#00FF00</color>
+    <color name="login_background">#FFFFFF</color>
 </resources>
