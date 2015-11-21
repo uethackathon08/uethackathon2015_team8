@@ -11,9 +11,12 @@ import com.j4f.R;
 import com.j4f.cores.CoreActivity;
 import com.j4f.models.Offer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
+import java.util.Date;
 
 /**
  * Created by nvg58 on 11/21/15.
@@ -40,11 +43,30 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.DataObjectHo
         final Offer c = dataSet.get(position);
         holder.title.setText(c.getTitle());
         holder.content.setText(c.getContent());
-        holder.number_bids.setText(String.valueOf(c.getBid_list().length) + " bid(s)");
-//        Log.e("c.getCreated_at()", Long.getLong(c.getCreated_at()).toString());
 
-//        long days_past = TimeUnit.MILLISECONDS.toHours(Long.getLong(c.getCreated_at()) - Calendar.getInstance().getTimeInMillis());
-        holder.time_past.setText("10 days");
+        holder.number_bids.setText("0 bid");
+        if (c.getBid_list() != null) {
+            int nBids = c.getBid_list().length;
+            if (nBids > 1) {
+                holder.number_bids.setText(nBids + " bids");
+            } else {
+                holder.number_bids.setText(nBids + " bid");
+            }
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date d = df.parse(c.getCreated_at());
+            long time_past = (Calendar.getInstance().getTimeInMillis() - d.getTime()) / 3600 / 1000;
+            if (time_past > 1) {
+                holder.time_past.setText(time_past + " hours");
+            } else {
+                holder.time_past.setText(time_past + " hour");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

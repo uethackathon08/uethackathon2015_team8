@@ -64,9 +64,14 @@ public class OffersFragment extends CoreFragment {
                                     String id = jo.getString("id");
                                     String title = jo.getString("title");
                                     String content = jo.getString("content");
-                                    String[] time = jo.getString("time").split(";");
-
-                                    String[] bid_list = jo.getString("bid_users_list_id").split(";");
+                                    String[] time = null;
+                                    if (jo.getString("time").equals("null")) {
+                                        time = jo.getString("time").split(";");
+                                    }
+                                    String[] bid_list = null;
+                                    if (!jo.getString("bid_users_list_id").equals("null")) {
+                                        bid_list = jo.getString("bid_users_list_id").split(";");
+                                    }
 
                                     String createdAt = jo.getString("created_at");
                                     String phone = jo.getString("phone");
