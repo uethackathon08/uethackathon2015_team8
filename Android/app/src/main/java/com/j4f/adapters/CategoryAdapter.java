@@ -40,7 +40,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.DataOb
     public void onBindViewHolder(final DataObjectHolder holder, final int position) {
         final Category c = dataSet.get(position);
         holder.name.setText(c.getName());
-        holder.info.setText(c.getNumberOfQuestion() + " Questions • " + c.getNumberOfTutor() + " Tutorials");
+        holder.info.setText(c.getNumberOfQuestion() + " Questions • " + c.getNumberOfTutor() + " Offers");
         context.makeImageRequest(c.getIconLink(), new ImageRequestListener() {
             @Override
             public void onBefore() {
@@ -48,7 +48,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.DataOb
             }
             @Override
             public void onResponse(ImageLoader.ImageContainer paramImageContainer, boolean paramBoolean) {
-                holder.icon.setImageBitmap(paramImageContainer.getBitmap());
+                if(paramImageContainer.getBitmap() != null) {
+                    holder.icon.setImageBitmap(paramImageContainer.getBitmap());
+                }
             }
             @Override
             public void onErrorResponse(VolleyError error) {
