@@ -5,18 +5,22 @@
     android:background="@color/background">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_marginLeft="@dimen/scrollview_margin"
         android:layout_marginRight="@dimen/scrollview_margin"
-        android:background="@color/white"
+        android:background="@color/background"
+        android:fillViewport="true"
+        android:scrollbars="none"
         android:layout_above="@+id/post_button">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_marginTop="15dp"
             android:orientation="vertical">
-
+            
             <EditText
                 android:id="@+id/title"
                 android:layout_width="match_parent"
@@ -32,13 +36,40 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_alignBottom="@+id/title"
                 android:background="@color/background"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="25dp"/>
+                android:layout_marginBottom="40dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:text="Tags"
+                android:textColor="@color/label"
+                android:textSize="14sp"/>
+
+            <com.tokenautocomplete.ContactsCompletionView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:hint="Add tags to the offer"
+                android:textColorHint="@color/hint"
+                android:imeOptions="actionDone"
+                android:textColor="@color/label"
+                android:textSize="16sp"
+                android:nextFocusDown="@+id/editText"
+                android:inputType="text|textNoSuggestions|textMultiLine"
+                android:focusableInTouchMode="true"
+                android:background="@android:color/transparent" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -72,6 +103,9 @@
                 android:id="@+id/timeslot_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10dp"
+                android:scrollbars="none"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="25dp">
 
@@ -111,8 +145,9 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
-                android:hint="+84 123 456 789"
+                android:hint="0123 456 789"
                 android:textColorHint="@color/hint"
+                android:inputType="phone"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:background="@android:color/transparent"/>

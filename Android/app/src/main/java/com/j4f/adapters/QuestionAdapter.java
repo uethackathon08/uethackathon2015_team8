@@ -1,5 +1,6 @@
 package com.j4f.adapters;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.j4f.R;
+import com.j4f.activities.QuestionDetailActivity;
 import com.j4f.application.Utils;
 import com.j4f.cores.CoreActivity;
 import com.j4f.interfaces.ImageRequestListener;
@@ -29,11 +31,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
         this.context = context;
         this.dataSet = myDataSet;
     }
-
-//    @Override
-//    public int getItemViewType(int position) {
-//        return -1;
-//    }
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -86,19 +83,65 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
             }
         });
 
-        holder.voteup.setOnClickListener(this);
-        holder.votedown.setOnClickListener(this);
-        holder.comment.setOnClickListener(this);
+        holder.voteup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.isVoteup) {
+                    holder.voteup.setImageDrawable(context.getResources().getDrawable(R.mipmap.voteup_disable));
+                    holder.isVoteup = false;
+                } else {
+                    holder.voteup.setImageDrawable(context.getResources().getDrawable(R.mipmap.voteup_ennable));
+                    holder.isVoteup = true;
+                }
+            }
+        });
+        holder.votedown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.isvotedown) {
+                    holder.votedown.setImageDrawable(context.getResources().getDrawable(R.mipmap.votedown_disable));
+                    holder.isvotedown = false;
+                } else {
+                    holder.votedown.setImageDrawable(context.getResources().getDrawable(R.mipmap.votedown_ennable));
+                    holder.isvotedown = true;
+                }
+            }
+        });
+        holder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, QuestionDetailActivity.class);
+                i.putExtra("qId", q.getId());
+                i.putExtra("uId", q.getUserId());
+                i.putExtra("uName", q.getNameOfUser());
+                i.putExtra("avatar", q.getUserAvatarLink());
+                i.putExtra("title", q.getTitle());
+                context.startActivity(i);
+            }
+        });
         holder.share.setOnClickListener(this);
         holder.more.setOnClickListener(this);
-        holder.bookmark.setOnClickListener(this);
+        holder.bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.isBookmark) {
+                    holder.bookmark.setImageDrawable(context.getResources().getDrawable(R.mipmap.bookmark_disable));
+                    holder.isBookmark = false;
+                } else {
+                    holder.bookmark.setImageDrawable(context.getResources().getDrawable(R.mipmap.bookmark_ennable));
+                    holder.isBookmark = true;
+                }
+            }
+        });
         holder.avatar.setOnClickListener(this);
         holder.image.setOnClickListener(this);
+
+
     }
 
-    public void addItem(Question dataObj, int index) {
-        dataSet.add(index, dataObj);
-        notifyItemInserted(index);
+    public void addItem(Question dataObj) {
+        dataSet.add(dataObj);
+        notifyDataSetChanged();
     }
 
     public void deleteItem(int index) {
@@ -146,6 +189,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
     public static class DataObjectHolder extends RecyclerView.ViewHolder{
         public ImageView image, avatar, voteup, votedown, comment, share, more, bookmark;
         public TextView title, content, name, time;
+        public boolean isVoteup = false;
+        public boolean isvotedown = false;
+        public boolean isBookmark = false;
         public DataObjectHolder(View itemView, int type) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image);

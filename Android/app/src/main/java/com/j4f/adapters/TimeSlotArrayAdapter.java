@@ -63,7 +63,6 @@ public class TimeSlotArrayAdapter extends ArrayAdapter<TimeSlot> {
         final TimeSlot model = getItem(position);
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = new View(mActivity);
             convertView = mInflate.inflate(R.layout.item_row_timeslot, null);
             holder.date = (TextView) convertView.findViewById(R.id.date);
             holder.time = (TextView) convertView.findViewById(R.id.time);

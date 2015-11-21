@@ -10,5 +10,11 @@ public class Configs {
     public static String LOGIN = "user/login";
     public static String GET_ALL_CATEGORIES = "/tag";
     public static String GET_ALL_OFFERS = "/offer";
+    public static String GET_ALL_QUESTIONS = "/question";
 
+
+    public static int QUESTION_PAGE_LIMIT = 10;
+    public static int OFFER_PAGE_LIMIT = 10;
+    public static int COMMENT_PAGE_LIMIT = 100;
+    public static int CATEGORY_PAGE_LIMIT = 10;
 }

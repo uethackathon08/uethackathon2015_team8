@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.marshalchen.ultimaterecyclerview.UltimateRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/question_details_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.j4f.activities.QuestionDetailsActivity"
-    tools:showIn="@layout/activity_question_details">
+    app:recyclerviewEmptyView="@layout/empty_view"
+    android:scrollbars="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</com.marshalchen.ultimaterecyclerview.UltimateRecyclerView>
+

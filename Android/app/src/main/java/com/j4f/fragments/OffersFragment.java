@@ -1,10 +1,10 @@
 package com.j4f.fragments;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +21,6 @@ import com.j4f.cores.CoreActivity;
 import com.j4f.cores.CoreFragment;
 import com.j4f.models.Offer;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +47,44 @@ public class OffersFragment extends CoreFragment {
         return view;
     }
 
+
+    public void addOffer(final Offer o) {
+        offersList.add(o);
+        offerAdapter.notifyDataSetChanged();
+    }
+    public int mMaxOffer = -1;
+    public int mCurrentOfferPage = 1;
+    public int mLimit = -1;
+    @TargetApi(Build.VERSION_CODES.M)
+    public void initOffersList() {
+        offersList = new ArrayList<Offer>();
+        offerAdapter = new OfferAdapter(offersList, mActivity);
+        offerRecyclerView.setHasFixedSize(true);
+        offerRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        offerRecyclerView.setAdapter(offerAdapter);
+        offerRecyclerView.enableLoadmore();
+        offerRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
+                mCurrentOfferPage++;
+                if (mCurrentOfferPage <= mLimit) {
+                    getAllOffers(Configs.OFFER_PAGE_LIMIT, mCurrentOfferPage);
+                }
+            }
+        });
+        offerRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                offersList = new ArrayList<Offer>();
+                offerAdapter.notifyDataSetChanged();
+                mMaxOffer = -1;
+                mCurrentOfferPage = 1;
+                mLimit = -1;
+                getAllOffers(Configs.OFFER_PAGE_LIMIT, mCurrentOfferPage);
+            }
+        });
+        getAllOffers(Configs.OFFER_PAGE_LIMIT, mCurrentOfferPage);
+    }
     public void getAllOffers(final int limit, final int page) {
         mContext.showProgressDialog("Loading offers ...");
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Configs.BASE_URL +
@@ -56,10 +93,13 @@ public class OffersFragment extends CoreFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.e("response", response.toString());
-
                             String status = response.getString("status");
-                            if (status.equals("ok")) {
+                            if(status.equals("ok")) {
+                                if(mMaxOffer == -1) {
+                                    mMaxOffer = response.getInt("count");
+                                    int d = mMaxOffer / Configs.CATEGORY_PAGE_LIMIT;
+                                    mLimit = mMaxOffer % Configs.CATEGORY_PAGE_LIMIT == 0 ? d : d + 1;
+                                }
                                 JSONArray ja = response.getJSONArray("data");
                                 for (int i = 0; i < ja.length(); i++) {
                                     JSONObject jo = ja.getJSONObject(i);
@@ -78,31 +118,11 @@ public class OffersFragment extends CoreFragment {
                                     String createdAt = jo.getString("created_at");
                                     String phone = jo.getString("phone");
                                     String[] tags = jo.getString("tags").split(";");
-                                    offersList.add(new Offer(id, title, tags, content, time, phone, bid_list, createdAt));
-                                    if (i == ja.length() - 1) {
-                                        offerAdapter = new OfferAdapter(offersList, mActivity);
-                                        offerRecyclerView.setHasFixedSize(true);
-                                        offerRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-                                        offerRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-                                        offerRecyclerView.setAdapter(offerAdapter);
-
-                                        offerRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                                            @Override
-                                            public void onRefresh() {
-                                                new Handler().postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-//                                                        offerAdapter.insert(moreNum++ + "  Refresh things", 0);
-
-                                                        offerRecyclerView.setRefreshing(false);
-                                                    }
-                                                }, 1000);
-                                            }
-                                        });
-                                    }
+                                    addOffer(new Offer(id, title, tags, content, time, phone, bid_list, createdAt));
                                 }
+                                offerRecyclerView.setRefreshing(false);
                             } else {
-                                System.err.println("Error loading offers");
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -126,12 +146,6 @@ public class OffersFragment extends CoreFragment {
     @Override
     protected void initModels() {
         initOffersList();
-    }
-
-    private void initOffersList() {
-        offersList = new ArrayList<Offer>();
-        mContext.loge("Start getting offers");
-        getAllOffers(100, 1);
     }
 
     @Override
