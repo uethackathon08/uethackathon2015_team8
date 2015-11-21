@@ -11,8 +11,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:elevation="1dp"
+            android:orientation="vertical"
             android:padding="16dp">
 
             <HorizontalScrollView
@@ -22,45 +22,9 @@
                 android:scrollbars="none">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/tags_list"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_corner"
-                        android:gravity="center"
-                        android:padding="6dp"
-                        android:text="Tags Demo"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_corner"
-                        android:gravity="center"
-                        android:padding="6dp"
-                        android:layout_marginLeft="8dp"
-                        android:text="Tags Demo"
-                        android:textSize="12sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_corner"
-                        android:gravity="center"
-                        android:padding="6dp"
-                        android:layout_marginLeft="8dp"
-                        android:text="Tags Demo"
-                        android:textSize="12sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_corner"
-                        android:gravity="center"
-                        android:padding="6dp"
-                        android:layout_marginLeft="8dp"
-                        android:text="Tags Demo"
-                        android:textSize="12sp" />
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -69,19 +33,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="3"
-                android:textColor="@color/cardview_dark_background"
                 android:paddingBottom="8dp"
                 android:paddingTop="16dp"
                 android:text="Animation Video Developer Needed urgently"
+                android:textColor="@color/cardview_dark_background"
                 android:textSize="26sp" />
 
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
                 android:maxLines="1"
-                android:text="Graphic Design, Animation, Video Talent, Video Design" />
+                android:text="Graphic Design, Animation, Video Talent, Video Design"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

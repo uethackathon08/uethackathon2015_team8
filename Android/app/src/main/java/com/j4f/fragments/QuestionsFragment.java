@@ -126,7 +126,7 @@ public class QuestionsFragment extends CoreFragment {
                                     try {
                                         addQuestion(new Question(categoriesList, id, users_id, nameOfUser, avatar,
                                                 title, content, photo, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(timestamp),
-                                                upvotes, downvotes, 20, new ArrayList<Answer>()));
+                                                upvotes, downvotes, 20, new ArrayList<Answer>(), tag));
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
