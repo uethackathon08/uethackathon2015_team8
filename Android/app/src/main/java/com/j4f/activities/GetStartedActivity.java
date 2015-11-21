@@ -34,6 +34,9 @@ public class GetStartedActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+
+        startActivity(new Intent(GetStartedActivity.this, PostOfferActivity.class));
     }
 
 
