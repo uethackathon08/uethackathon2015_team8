@@ -1,19 +1,27 @@
 package com.j4f.activities;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.android.volley.Request;
@@ -24,8 +32,13 @@ import com.j4f.adapters.TimeSlotArrayAdapter;
 import com.j4f.application.MyApplication;
 import com.j4f.cores.CoreActivity;
 import com.j4f.models.TimeSlot;
+import com.j4f.utils.Constant;
+import com.tokenautocomplete.ContactsCompletionView;
+import com.tokenautocomplete.Tag;
 import com.j4f.utils.CustomRequest;
 import com.j4f.utils.TimeUtils;
+import com.tokenautocomplete.FilteredArrayAdapter;
+import com.tokenautocomplete.TokenCompleteTextView;
 
 import org.json.JSONObject;
 
@@ -35,9 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PostOfferActivity extends CoreActivity {
-
-    private static final String BASE_URL = "http://188.166.241.34/hackathon/j4f/";
+public class PostOfferActivity extends CoreActivity implements TokenCompleteTextView.TokenListener {
 
     private EditText mTitleText;
     private EditText mContactText;
@@ -49,6 +60,10 @@ public class PostOfferActivity extends CoreActivity {
     private List<TimeSlot> mTimeSlotList;
     private ListView mTimeSlotListView;
     private TimeSlotArrayAdapter mTimeSlotArrayAdapter;
+    private ContactsCompletionView mCompletionView;
+    private Tag[] mTags;
+    private ArrayAdapter<Tag> mTagAdapter;
+    private List<String> mOfferedTags;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,15 +89,62 @@ public class PostOfferActivity extends CoreActivity {
         mTimeSlotArrayAdapter = new TimeSlotArrayAdapter(this, R.layout.item_row_timeslot, mTimeSlotList);
         mTimeSlotListView.setAdapter(mTimeSlotArrayAdapter);
 
+        mOfferedTags = new ArrayList<>();
+
         initViews();
         initModels();
         initListeners();
         initAnimations();
-    }
 
+        mTags = new Tag[]{
+                new Tag(1, "Business"),
+                new Tag(2, "Data Entry & Admin"),
+                new Tag(3, "Design, Media & Architecture"),
+                new Tag(4, "Engineering and Science"),
+                new Tag(5, "Local Jobs & Service"),
+                new Tag(6, "Sales & Marketing"),
+                new Tag(7, "Mobile Phones & Computing"),
+                new Tag(8, "Others"),
+                new Tag(9, "Product Sourcing & Manufacturing"),
+                new Tag(10, "Translation & Languages"),
+                new Tag(11, "Websites, IT & Software"),
+                new Tag(12, "Writing & Content")
+        };
+
+        mTagAdapter = new FilteredArrayAdapter<Tag>(this, R.layout.item_tag, mTags) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+
+                    LayoutInflater l = (LayoutInflater)getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                    convertView = l.inflate(R.layout.item_tag, parent, false);
+                }
+
+                Tag p = getItem(position);
+                ((TextView)convertView.findViewById(R.id.name)).setText(p.getName());
+                String uri = "@drawable/tag_icon_" + String.valueOf(p.getId());
+                int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                ((ImageView)convertView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(imageResource));
+
+                return convertView;
+            }
+
+            @Override
+            protected boolean keepObject(Tag tag, String mask) {
+                mask = mask.toLowerCase();
+                return (tag.getName().toLowerCase().startsWith(mask) && !mOfferedTags.contains(tag.getName()));
+            }
+        };
+
+        mCompletionView = (ContactsCompletionView)findViewById(R.id.searchView);
+        mCompletionView.setAdapter(mTagAdapter);
+        mCompletionView.setTokenListener(this);
+        mCompletionView.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select);
+    }
 
     @Override
     public void initViews() {
+
     }
 
     @Override
@@ -101,16 +163,29 @@ public class PostOfferActivity extends CoreActivity {
                 if (b) {
                     mAddMoreTimeSlotButton.setVisibility(View.VISIBLE);
                     mTimeSlotListView.setVisibility(View.VISIBLE);
-
+                    mCalendar = Calendar.getInstance();
                     showDatePicker();
-
-
-
-//                    showToastLong("checked");
                 } else {
                     mTimeSlotListView.setVisibility(View.GONE);
                     mAddMoreTimeSlotButton.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        mTimeSlotListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mCalendar = mTimeSlotList.get(i).getDatetime();
+                changeTimeSlot(i);
+            }
+        });
+
+        mTimeSlotListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mTimeSlotList.remove(i);
+                mTimeSlotArrayAdapter.notifyDataSetChanged();
+                return true;
             }
         });
     }
@@ -119,13 +194,6 @@ public class PostOfferActivity extends CoreActivity {
     public void initAnimations() {
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -150,35 +218,104 @@ public class PostOfferActivity extends CoreActivity {
                 showDatePicker();
                 break;
             case R.id.post_button:
-                String url = BASE_URL + "offer/new";
+                String title = mTitleText.getText().toString();
+                String content = mDescriptionText.getText().toString();
+                String contact = mContactText.getText().toString();
+
+                if (title == null || title.length() < 10) {
+                    alert("Title required more than 10 characters");
+                    break;
+                }
+                if (content == null || content.length() < 10) {
+                    alert("Description required more than 10 characters");
+                    break;
+                }
+                if (mOfferedTags.size() < 1) {
+                    alert("Your offer must have at least 1 tag");
+                    break;
+                }
+
+                String url = Constant.BASE_URL + "offer/new";
                 Map<String, String> params = new HashMap<>();
-                params.put("tags", "tag1");
-                params.put("title", "Test");
-                params.put("content", "content");
+                String tags = "";
+                for (String tag : mOfferedTags) {
+                    tags += tag + ";";
+                }
+                params.put("tags", tags);
+                params.put("title", title);
+                params.put("content", content);
                 params.put("users_id", MyApplication.USER_ID);
+                if (contact != null) params.put("phone", contact);
+
+                if (mTimeSlotList.size() > 0) {
+                    String time = "";
+                    for (TimeSlot timeSlot : mTimeSlotList) {
+                        time += timeSlot.getDatetime().getTimeInMillis() + ";";
+                    }
+                    params.put("time", time);
+                }
 
                 CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        showToastLong(response.toString());
+                        removePreviousDialog();
+                        finish();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        removePreviousDialog();
                         showToastLong("Error");
                     }
                 });
 
                 MyApplication.getInstance().addToRequestQueue(jsObjRequest);
+                showProgressDialog("Posting...");
                 break;
             default:
                 break;
         }
     }
 
-    private void showDatePicker() {
-        mCalendar = Calendar.getInstance();
+    private void alert(final String title) {
+        AlertDialog alertDialog = new AlertDialog.Builder(PostOfferActivity.this).create();
+        alertDialog.setTitle(title);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
 
+    private void changeTimeSlot(final int timeSlotIndex) {
+        new DatePickerDialog(PostOfferActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                mCalendar.set(Calendar.YEAR, year);
+                mCalendar.set(Calendar.MONTH, monthOfYear);
+                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                new TimePickerDialog(PostOfferActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        mCalendar.set(Calendar.HOUR_OF_DAY, i);
+                        mCalendar.set(Calendar.MINUTE, i1);
+
+                        mTimeSlotList.set(timeSlotIndex, new TimeSlot(TimeUtils.formatDate(mCalendar),
+                                TimeUtils.formatTime(mCalendar), mCalendar));
+                        mTimeSlotArrayAdapter.notifyDataSetChanged();
+                    }
+                }, mCalendar.
+                        get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), false).show();
+            }
+        }, mCalendar
+                .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+                mCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void showDatePicker() {
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -208,7 +345,6 @@ public class PostOfferActivity extends CoreActivity {
                 mTimeSlotList.add(new TimeSlot(TimeUtils.formatDate(mCalendar),
                         TimeUtils.formatTime(mCalendar), mCalendar));
                 mTimeSlotArrayAdapter.notifyDataSetChanged();
-                setListViewHeightBasedOnChildren(mTimeSlotListView);
             }
         };
 
@@ -216,19 +352,15 @@ public class PostOfferActivity extends CoreActivity {
                 get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), false).show();
     }
 
-    private void setListViewHeightBasedOnChildren(ListView listView) {
-        int totalHeight = 0;
-        for (int i = 0; i < mTimeSlotArrayAdapter.getCount(); i++) {
-            View listItem = mTimeSlotArrayAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
 
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight
-                + (listView.getDividerHeight() * (mTimeSlotArrayAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
+    @Override
+    public void onTokenAdded(Object token) {
+        mOfferedTags.add(((Tag)token).getName());
+    }
+
+    @Override
+    public void onTokenRemoved(Object token) {
+
     }
 }
 
