@@ -1,6 +1,8 @@
 package com.j4f.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,6 +85,20 @@ public class OffersFragment extends CoreFragment {
                                         offerRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
                                         offerRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
                                         offerRecyclerView.setAdapter(offerAdapter);
+
+                                        offerRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                                            @Override
+                                            public void onRefresh() {
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+//                                                        offerAdapter.insert(moreNum++ + "  Refresh things", 0);
+
+                                                        offerRecyclerView.setRefreshing(false);
+                                                    }
+                                                }, 1000);
+                                            }
+                                        });
                                     }
                                 }
                             } else {

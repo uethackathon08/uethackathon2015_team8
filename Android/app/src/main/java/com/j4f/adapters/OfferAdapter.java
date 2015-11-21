@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by nvg58 on 11/21/15.
@@ -57,7 +59,8 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.DataObjectHo
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date d = df.parse(c.getCreated_at());
-            long time_past = (Calendar.getInstance().getTimeInMillis() - d.getTime()) / 3600 / 1000;
+//            long time_past = (Calendar.getInstance().getTimeInMillis() - d.getTime()) / 3600 / 1000;
+            long time_past = TimeUnit.MILLISECONDS.toHours(Calendar.getInstance(TimeZone.getTimeZone("GMT+7")).getTimeInMillis() - d.getTime());
             if (time_past > 1) {
                 holder.time_past.setText(time_past + " hours");
             } else {
