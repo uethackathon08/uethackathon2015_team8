@@ -15,6 +15,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.j4f.R;
 import com.j4f.activities.QuestionDetailActivity;
 import com.j4f.application.Utils;
+import com.j4f.configs.Configs;
 import com.j4f.cores.CoreActivity;
 import com.j4f.interfaces.ImageRequestListener;
 import com.j4f.models.Question;
@@ -48,7 +49,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
         holder.time.setText(" • " + q.getTimestamp().getHours() + ":" + q.getTimestamp().getMinutes());
         holder.name.setText(q.getNameOfUser());
 
-        context.makeImageRequest(q.getImageLink(), new ImageRequestListener() {
+        context.makeImageRequest(Configs.BASE_URL + q.getImageLink(), new ImageRequestListener() {
             @Override
             public void onBefore() {
                 holder.image.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));

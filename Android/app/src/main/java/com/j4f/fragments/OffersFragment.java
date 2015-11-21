@@ -99,8 +99,8 @@ public class OffersFragment extends CoreFragment {
                             if(status.equals("ok")) {
                                 if(mMaxOffer == -1) {
                                     mMaxOffer = response.getInt("count");
-                                    int d = mMaxOffer / Configs.CATEGORY_PAGE_LIMIT;
-                                    mLimit = mMaxOffer % Configs.CATEGORY_PAGE_LIMIT == 0 ? d : d + 1;
+                                    int d = mMaxOffer / Configs.OFFER_PAGE_LIMIT;
+                                    mLimit = mMaxOffer % Configs.OFFER_PAGE_LIMIT == 0 ? d : d + 1;
                                 }
                                 JSONArray ja = response.getJSONArray("data");
                                 for (int i = 0; i < ja.length(); i++) {
