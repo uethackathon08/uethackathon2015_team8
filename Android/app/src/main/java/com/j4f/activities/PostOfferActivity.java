@@ -155,7 +155,7 @@ public class PostOfferActivity extends CoreActivity {
                 params.put("tags", "tag1");
                 params.put("title", "Test");
                 params.put("content", "content");
-                params.put("users_id", "564fcd05a7292");
+                params.put("users_id", MyApplication.USER_ID);
 
                 CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
                     @Override

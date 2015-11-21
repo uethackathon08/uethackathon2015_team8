@@ -151,5 +151,5 @@
         android:layout_alignParentBottom="true"
         android:text="POST THIS OFFER"
         android:textColor="@color/white"
-        android:background="@color/colorAccent" />
+        android:background="@color/pink" />
 </RelativeLayout>
