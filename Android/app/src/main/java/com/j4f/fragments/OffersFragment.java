@@ -76,7 +76,9 @@ public class OffersFragment extends CoreFragment {
             @Override
             public void onRefresh() {
                 offersList = new ArrayList<Offer>();
+                offerAdapter = new OfferAdapter(offersList, mActivity);
                 offerAdapter.notifyDataSetChanged();
+                offerRecyclerView.setAdapter(offerAdapter);
                 mMaxOffer = -1;
                 mCurrentOfferPage = 1;
                 mLimit = -1;

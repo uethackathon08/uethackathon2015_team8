@@ -18,25 +18,6 @@ public class GetStartedActivity extends CoreActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_started);
 
-        Button btn_signin = (Button)findViewById(R.id.btn_signin);
-        Button btn_signup = (Button)findViewById(R.id.btn_signup);
-        btn_signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(),SigninActivity.class);
-                startActivity(intent);
-            }
-        });
-        btn_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), SignupActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        startActivity(new Intent(GetStartedActivity.this, PostOfferActivity.class));
-
         initViews();
         initModels();
         initListeners();
