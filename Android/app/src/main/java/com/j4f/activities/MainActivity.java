@@ -43,15 +43,12 @@ public class MainActivity extends CoreActivity
         initListeners();
         initAnimations();
 
-        startActivity(new Intent(this, PostOfferActivity.class));
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         tabHost = (MaterialTabHost) this.findViewById(R.id.materialTabHost);
         pager = (ViewPager) this.findViewById(R.id.viewpager);
-
-
 
         // init view pager
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -73,8 +70,7 @@ public class MainActivity extends CoreActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, PostOfferActivity.class));
             }
         });
 

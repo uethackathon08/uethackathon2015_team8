@@ -7,6 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +25,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.j4f.application.MyApplication;
+import com.j4f.configs.Configs;
+import com.j4f.dialogs.DialogProgress;
 import com.j4f.interfaces.ImageRequestListener;
 import com.j4f.interfaces.JSONArrayRequestListener;
 import com.j4f.interfaces.JSONObjectRequestListener;
@@ -181,9 +186,27 @@ public abstract class CoreActivity extends AppCompatActivity implements Serializ
                 .append("]: ").append(data).toString());
     }
 
-    public String TAG_JSONOBJ_REQUEST = "jsonobject_request";
-    public String TAG_JSONARR_REQUEST = "jsonarrayobject_request";
-    public String TAG_STRING_REQUEST = "string_request";
+    private android.support.v4.app.FragmentManager mFragmentManager = getSupportFragmentManager();
+    public void removePreviousDialog() {
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        Fragment prev = mFragmentManager.findFragmentByTag(TAG);
+        if (prev != null) ft.remove(prev);
+        ft.commit();
+        logi(new StringBuilder().append("Done. Remove previous dialog. TAG = ").append(TAG).toString());
+    }
+    private DialogFragment mDialog;
+    public DialogFragment showProgressDialog(final String msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                removePreviousDialog();
+                mDialog = DialogProgress.newInstance(CoreActivity.this, msg);
+                mDialog.show(getSupportFragmentManager(), TAG);
+                logi(new StringBuilder().append("Done. Show progressDialog : ").append(msg).toString());
+            }
+        });
+        return mDialog;
+    }
 
     public void cancelAllRequestWithTag(String tag) {
         MyApplication.getInstance().getRequestQueue().cancelAll(tag);
@@ -203,7 +226,7 @@ public abstract class CoreActivity extends AppCompatActivity implements Serializ
                 mListener.onError(error);
             }
         });
-        MyApplication.getInstance().addToRequestQueue(jsonObjRequest, TAG_JSONOBJ_REQUEST);
+        MyApplication.getInstance().addToRequestQueue(jsonObjRequest, Configs.TAG_JSONOBJ_REQUEST);
     }
 
     public void makeJsonArrayRequest(String url, final JSONArrayRequestListener mListener) {
@@ -220,7 +243,7 @@ public abstract class CoreActivity extends AppCompatActivity implements Serializ
                 mListener.onError(error);
             }
         });
-        MyApplication.getInstance().addToRequestQueue(jsonArrRequest, TAG_JSONARR_REQUEST);
+        MyApplication.getInstance().addToRequestQueue(jsonArrRequest, Configs.TAG_JSONARR_REQUEST);
     }
 
     public void makeStringRequest(String url, final StringRequestListener mListener) {
@@ -237,7 +260,7 @@ public abstract class CoreActivity extends AppCompatActivity implements Serializ
                 mListener.onErrorResponse(error);
             }
         });
-        MyApplication.getInstance().addToRequestQueue(stringRequest, TAG_STRING_REQUEST);
+        MyApplication.getInstance().addToRequestQueue(stringRequest, Configs.TAG_STRING_REQUEST);
     }
 
     public void makeImageRequest(String url, final ImageRequestListener mListener) {
