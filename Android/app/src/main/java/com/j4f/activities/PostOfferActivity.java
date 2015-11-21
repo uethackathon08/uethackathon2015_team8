@@ -105,7 +105,6 @@ public class PostOfferActivity extends CoreActivity {
                     showDatePicker();
 
 
-
 //                    showToastLong("checked");
                 } else {
                     mTimeSlotListView.setVisibility(View.GONE);

@@ -12,10 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import com.j4f.R;
 import com.j4f.cores.CoreActivity;
 import com.j4f.fragments.CategoriesFragment;
@@ -27,12 +29,15 @@ import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
 public class MainActivity extends CoreActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MaterialTabListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MaterialTabListener{
 
     public MaterialTabHost tabHost;
     public ViewPager pager;
     public ViewPagerAdapter adapter;
     public Toolbar toolbar;
+    private Boolean isFabOpen = false;
+    private Animation fab_open, fab_close, rotate_backward, rotate_forward;
+    private FloatingActionButton fab, fab1, fab2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,8 +54,6 @@ public class MainActivity extends CoreActivity
 
         tabHost = (MaterialTabHost) this.findViewById(R.id.materialTabHost);
         pager = (ViewPager) this.findViewById(R.id.viewpager);
-
-        // init view pager
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -65,12 +68,30 @@ public class MainActivity extends CoreActivity
             tabHost.addTab(tabHost.newTab().setText(adapter.getPageTitle(i)).setTabListener(this));
 
         }
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab_open = AnimationUtils.loadAnimation(this, R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(this, R.anim.fab_close);
+        rotate_backward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward);
+        rotate_forward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                startActivity(new Intent(MainActivity.this, PostOfferActivity.class));
+                animateFAB();
+            }
+        });
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, PostOfferActivity.class));
+            }
+        });
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PostQuestionActivity.class));
             }
         });
 
@@ -145,7 +166,6 @@ public class MainActivity extends CoreActivity
 
     @Override
     public void initAnimations() {
-
     }
 
     @Override
@@ -207,7 +227,27 @@ public class MainActivity extends CoreActivity
 
     @Override
     public void onClick(View v) {
-
     }
+
+    public void animateFAB() {
+        if (isFabOpen) {
+            fab.startAnimation(rotate_backward);
+            fab1.startAnimation(fab_close);
+            fab2.startAnimation(fab_close);
+            fab1.setClickable(false);
+            fab2.setClickable(false);
+            isFabOpen = false;
+            Log.d("fabMenu", "close");
+        } else {
+            fab.startAnimation(rotate_forward);
+            fab1.startAnimation(fab_open);
+            fab2.startAnimation(fab_open);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            isFabOpen = true;
+            Log.d("fabMenu", "open");
+        }
+    }
+
 
 }
