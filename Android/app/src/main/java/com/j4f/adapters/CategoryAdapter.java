@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.j4f.R;
+import com.j4f.application.Utils;
 import com.j4f.cores.CoreActivity;
 import com.j4f.interfaces.ImageRequestListener;
 import com.j4f.models.Category;
@@ -49,7 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.DataOb
             @Override
             public void onResponse(ImageLoader.ImageContainer paramImageContainer, boolean paramBoolean) {
                 if(paramImageContainer.getBitmap() != null) {
-                    holder.icon.setImageBitmap(paramImageContainer.getBitmap());
+                    holder.icon.setImageBitmap(Utils.getCircleBitmap(paramImageContainer.getBitmap()));
                 }
             }
             @Override
