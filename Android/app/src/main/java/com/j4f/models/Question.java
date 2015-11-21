@@ -1,7 +1,5 @@
 package com.j4f.models;
 
-import com.j4f.enums.Category;
-
 import java.util.ArrayList;
 import java.util.Date;
 

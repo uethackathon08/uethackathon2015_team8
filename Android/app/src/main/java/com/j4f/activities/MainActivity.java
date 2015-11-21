@@ -29,9 +29,10 @@ import it.neokree.materialtabs.MaterialTabListener;
 public class MainActivity extends CoreActivity
         implements NavigationView.OnNavigationItemSelectedListener, MaterialTabListener {
 
-    private MaterialTabHost tabHost;
-    private ViewPager pager;
-    private ViewPagerAdapter adapter;
+    public MaterialTabHost tabHost;
+    public ViewPager pager;
+    public ViewPagerAdapter adapter;
+    public Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class MainActivity extends CoreActivity
 
         startActivity(new Intent(this, PostOfferActivity.class));
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         tabHost = (MaterialTabHost) this.findViewById(R.id.materialTabHost);
@@ -212,4 +213,5 @@ public class MainActivity extends CoreActivity
     public void onClick(View v) {
 
     }
+
 }

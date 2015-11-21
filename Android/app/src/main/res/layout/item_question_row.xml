@@ -159,13 +159,36 @@
                             android:textSize="17dp"
                             android:textStyle="bold" />
 
-                        <com.j4f.customizes.MyTextView
-                            android:id="@+id/info"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginTop="2dp"
-                            android:text="Việt Anh Vũ  12:42 Hôm nay" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/person"
+                                android:layout_width="13dp"
+                                android:layout_height="13dp"
+                                android:src="@mipmap/personal" />
+
+                            <com.j4f.customizes.MyTextView
+                                android:id="@+id/name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:gravity="center_vertical"
+                                android:text="Việt Anh Vũ" />
+
+                            <com.j4f.customizes.MyTextView
+                                android:id="@+id/time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center_vertical"
+                                android:text="17:20" />
+
+                        </LinearLayout>
 
                         <ImageView
                             android:id="@+id/bookmark"

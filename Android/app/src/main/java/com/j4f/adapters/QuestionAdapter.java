@@ -48,7 +48,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
         holder.title.setText(q.getTitle());
         holder.title.setSelected(true);
         holder.content.setText(q.getContent());
-        holder.info.setText("@" + q.getNameOfUser() + " • " + q.getTimestamp().getHours() + ":" + q.getTimestamp().getMinutes());
+        holder.time.setText(" • " + q.getTimestamp().getHours() + ":" + q.getTimestamp().getMinutes());
+        holder.name.setText(q.getNameOfUser());
 
         context.makeImageRequest(q.getImageLink(), new ImageRequestListener() {
             @Override
@@ -144,7 +145,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder{
         public ImageView image, avatar, voteup, votedown, comment, share, more, bookmark;
-        public TextView title, content, info;
+        public TextView title, content, name, time;
         public DataObjectHolder(View itemView, int type) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image);
@@ -157,7 +158,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
             bookmark = (ImageView) itemView.findViewById(R.id.bookmark);
             title = (TextView) itemView.findViewById(R.id.title);
             content = (TextView) itemView.findViewById(R.id.content);
-            info = (TextView) itemView.findViewById(R.id.info);
+            name = (TextView) itemView.findViewById(R.id.name);
+            time = (TextView) itemView.findViewById(R.id.time);
         }
     }
 }
