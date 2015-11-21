@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class Question {
     private ArrayList<Category> categoryList;
+    private String id;
     private String userId;
     private String nameOfUser;
     private String userAvatarLink;
@@ -20,8 +21,12 @@ public class Question {
     private int share;
     private ArrayList<Answer> answersList;
 
-    public Question(ArrayList<Category> categoryList, String userId, String nameOfUser, String userAvatarLink, String title, String content, String imageLink, Date timestamp, int voteUp, int voteDown, int share, ArrayList<Answer> answersList) {
+    public Question(ArrayList<Category> categoryList, String id, String userId,
+                    String nameOfUser, String userAvatarLink, String title,
+                    String content, String imageLink, Date timestamp, int voteUp,
+                    int voteDown, int share, ArrayList<Answer> answersList) {
         this.categoryList = categoryList;
+        this.id = id;
         this.userId = userId;
         this.nameOfUser = nameOfUser;
         this.userAvatarLink = userAvatarLink;
@@ -41,6 +46,14 @@ public class Question {
 
     public void setCategoryList(ArrayList<Category> categoryList) {
         this.categoryList = categoryList;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUserId() {

@@ -61,9 +61,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.DataOb
         });
     }
 
-    public void addItem(Category dataObj, int index) {
-        dataSet.add(index, dataObj);
-        notifyItemInserted(index);
+    public void addItem(Category dataObj) {
+        dataSet.add(dataObj);
+        notifyDataSetChanged();
     }
 
     public void deleteItem(int index) {

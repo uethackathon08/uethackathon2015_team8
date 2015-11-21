@@ -33,6 +33,7 @@ public class MainActivity extends CoreActivity
     public ViewPager pager;
     public ViewPagerAdapter adapter;
     public Toolbar toolbar;
+    public FloatingActionButton fab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,10 +64,9 @@ public class MainActivity extends CoreActivity
         // insert all tabs from pagerAdapter data
         for (int i = 0; i < adapter.getCount(); i++) {
             tabHost.addTab(tabHost.newTab().setText(adapter.getPageTitle(i)).setTabListener(this));
-
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +75,8 @@ public class MainActivity extends CoreActivity
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -126,6 +127,11 @@ public class MainActivity extends CoreActivity
         public CharSequence getPageTitle(int position) {
             return position == 0 ? getResources().getString(R.string.tab_categories) : position == 1 ? getResources().getString(R.string.tab_questions) : getResources().getString(R.string.tab_tutors);
         }
+    }
+
+    public void hideActionbarAndFloatingButton() {
+        getSupportActionBar().hide();
+        fab.hide();
     }
 
     @Override
