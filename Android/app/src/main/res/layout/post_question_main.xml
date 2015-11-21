@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:isScrollContainer="true"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/post_button"
+        android:scrollbars="none"
+        android:layout_marginLeft="@dimen/scrollview_margin"
+        android:layout_marginRight="@dimen/scrollview_margin"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/transparent"
+                android:hint="Title"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/hint"
+                android:textSize="25sp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignBottom="@+id/title"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="0dp"
+                android:background="@color/background" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="20dp"
+                android:text="Description"
+                android:textColor="@color/label"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:hint="More details about question"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/my_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:src="@mipmap/image" />
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/post_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pink"
+        android:text="POST THIS QUESTION"
+        android:layout_gravity="bottom"
+        android:textColor="@color/white" />
+</RelativeLayout>

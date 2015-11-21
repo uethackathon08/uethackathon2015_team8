@@ -3,6 +3,7 @@ package com.j4f.fragments;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +70,7 @@ public class CategoriesFragment extends CoreFragment {
                                     String icon = jo.getString("icon");
                                     addCategory(new Category(id, name, icon, 5, 5));
                                 }
+                                categoryRecyclerView.setRefreshing(false);
                             } else {
                                 mContext.loge("Status failed");
                             }
@@ -111,8 +113,22 @@ public class CategoriesFragment extends CoreFragment {
                 }
             }
         });
+        categoryRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                categoryList = new ArrayList<Category>();
+                categoryAdapter = new CategoryAdapter(categoryList, mActivity);
+                categoryAdapter.notifyDataSetChanged();
+                categoryRecyclerView.setAdapter(categoryAdapter);
+                mMaxCategory = -1;
+                mCurrentCategoryPage = 1;
+                mLimit = -1;
+                getAllCategory(Configs.CATEGORY_PAGE_LIMIT, mCurrentCategoryPage);
+            }
+        });
         getAllCategory(Configs.CATEGORY_PAGE_LIMIT, mCurrentCategoryPage);
     }
+    private int scrollOld = 0;
 
     @Override
     public void onClick(View view) {

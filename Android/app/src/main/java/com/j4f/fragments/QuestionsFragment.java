@@ -3,6 +3,7 @@ package com.j4f.fragments;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,6 +75,19 @@ public class QuestionsFragment extends CoreFragment {
                 }
             }
         });
+        questionRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                questionList = new ArrayList<Question>();
+                questionAdapter = new QuestionAdapter(questionList, mActivity);
+                questionAdapter.notifyDataSetChanged();
+                questionRecyclerView.setAdapter(questionAdapter);
+                mMaxQuestion = -1;
+                mCurrentQuestionPage = 1;
+                mLimit = -1;
+                getAllQuestion(Configs.QUESTION_PAGE_LIMIT, mCurrentQuestionPage);
+            }
+        });
         getAllQuestion(Configs.QUESTION_PAGE_LIMIT, mCurrentQuestionPage);
     }
     public void getAllQuestion(final int limit, final int page) {
@@ -112,11 +126,12 @@ public class QuestionsFragment extends CoreFragment {
                                     try {
                                         addQuestion(new Question(categoriesList, id, users_id, nameOfUser, avatar,
                                                 title, content, photo, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(timestamp),
-                                                upvotes, downvotes, 20, new ArrayList<Answer>()));
+                                                upvotes, downvotes, 20, new ArrayList<Answer>(), tag));
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
                                 }
+                                questionRecyclerView.setRefreshing(false);
                             } else {
 
                             }

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/comment_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/avatar" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/comment_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nhật ký của mẹ"
+                    android:textColor="@color/gray"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/comment_voteup"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:padding="5dp"
+                    android:src="@mipmap/voteup_disable" />
+
+                <com.j4f.customizes.MyTextView
+                    android:id="@+id/comment_voteup_quan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="30"
+                    android:textColor="@color/lightgray"
+                    android:textSize="13dp" />
+
+                <ImageView
+                    android:id="@+id/comment_votedown"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="5dp"
+                    android:padding="5dp"
+                    android:src="@mipmap/votedown_disable" />
+
+                <com.j4f.customizes.MyTextView
+                    android:id="@+id/comment_votedown_quan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textColor="@color/lightgray"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+            <com.j4f.customizes.MyTextView
+                android:id="@+id/comment_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Lá thư viết vội, có tên rất lạ, chắc là người con thương rất nhiều. Một ngày mẹ thấy, con buồn vu vơ. Nụ dồ vẫn ở trong ngăn bàn. Là đâu đã tàn, hoa đâu đã vàng..."
+                android:textColor="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="2dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
+                    android:src="@mipmap/time" />
+
+                <com.j4f.customizes.MyTextView
+                    android:id="@+id/comment_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="Hôm qua lúc 12:26 AM"
+                    android:textColor="@color/lightgray"
+                    android:textSize="13dp" />
+
+                <com.j4f.customizes.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_weight="1" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray" />
+</LinearLayout>

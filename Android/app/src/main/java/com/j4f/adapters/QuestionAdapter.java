@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -15,6 +16,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.j4f.R;
 import com.j4f.activities.QuestionDetailActivity;
 import com.j4f.application.Utils;
+import com.j4f.configs.Configs;
 import com.j4f.cores.CoreActivity;
 import com.j4f.interfaces.ImageRequestListener;
 import com.j4f.models.Question;
@@ -48,7 +50,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
         holder.time.setText(" • " + q.getTimestamp().getHours() + ":" + q.getTimestamp().getMinutes());
         holder.name.setText(q.getNameOfUser());
 
-        context.makeImageRequest(q.getImageLink(), new ImageRequestListener() {
+        context.makeImageRequest(Configs.BASE_URL + q.getImageLink(), new ImageRequestListener() {
             @Override
             public void onBefore() {
                 holder.image.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
@@ -112,6 +114,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
             public void onClick(View v) {
                 Intent i = new Intent(context, QuestionDetailActivity.class);
                 i.putExtra("qId", q.getId());
+                i.putExtra("uId", q.getUserId());
+                i.putExtra("uName", q.getNameOfUser());
+                i.putExtra("avatar", q.getUserAvatarLink());
+                i.putExtra("title", q.getTitle());
                 context.startActivity(i);
             }
         });
@@ -132,7 +138,17 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
         holder.avatar.setOnClickListener(this);
         holder.image.setOnClickListener(this);
 
+        LinearLayout.LayoutParams lp = new
+                LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
+        for (String tag : q.getTags()) {
+            TextView tv = (TextView) View.inflate(context, R.layout.textview_for_tag, null);
+            lp.setMargins(0, 0, 16, 0);
+            tv.setLayoutParams(lp);
+
+            tv.setText(tag);
+            holder.tags_list.addView(tv);
+        }
     }
 
     public void addItem(Question dataObj) {
@@ -185,6 +201,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
     public static class DataObjectHolder extends RecyclerView.ViewHolder{
         public ImageView image, avatar, voteup, votedown, comment, share, more, bookmark;
         public TextView title, content, name, time;
+        public LinearLayout tags_list;
         public boolean isVoteup = false;
         public boolean isvotedown = false;
         public boolean isBookmark = false;
@@ -202,6 +219,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
             content = (TextView) itemView.findViewById(R.id.content);
             name = (TextView) itemView.findViewById(R.id.name);
             time = (TextView) itemView.findViewById(R.id.time);
+            tags_list = (LinearLayout) itemView.findViewById(R.id.tags_list);
         }
     }
 }

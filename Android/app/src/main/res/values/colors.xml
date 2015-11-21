@@ -16,4 +16,6 @@
     <color name="green">#00FF00</color>
     <color name="login_background">#FFFFFF</color>
     <color name="light_black">#333333</color>
+    <color name="colorFAB1">#2196F3</color>
+    <color name="colorFAB2">#E040FB</color>
 </resources>
