@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">J4F</string>
-
-
+    <string name="app_name">Stubber</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -34,4 +32,5 @@
     <string name="title_activity_question_details">QuestionDetailsActivity</string>
     <string name="title_activity_post_offer">PostOfferActivity</string>
     <string name="title_activity_question_detail">QuestionDetailActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

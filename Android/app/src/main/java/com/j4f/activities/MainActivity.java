@@ -133,6 +133,10 @@ public class MainActivity extends CoreActivity
         getSupportActionBar().hide();
         fab.hide();
     }
+    public void showActionbarAndFloatingButton() {
+        getSupportActionBar().show();
+        fab.show();
+    }
 
     @Override
     public void initViews() {

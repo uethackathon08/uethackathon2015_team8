@@ -112,6 +112,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
             public void onClick(View v) {
                 Intent i = new Intent(context, QuestionDetailActivity.class);
                 i.putExtra("qId", q.getId());
+                i.putExtra("uId", q.getUserId());
+                i.putExtra("uName", q.getNameOfUser());
+                i.putExtra("avatar", q.getUserAvatarLink());
+                i.putExtra("title", q.getTitle());
                 context.startActivity(i);
             }
         });

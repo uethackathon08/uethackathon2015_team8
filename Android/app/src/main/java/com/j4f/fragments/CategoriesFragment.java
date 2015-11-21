@@ -19,6 +19,8 @@ import com.j4f.application.MyApplication;
 import com.j4f.configs.Configs;
 import com.j4f.cores.CoreFragment;
 import com.j4f.models.Category;
+import com.marshalchen.ultimaterecyclerview.ObservableScrollState;
+import com.marshalchen.ultimaterecyclerview.ObservableScrollViewCallbacks;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import org.json.JSONArray;
@@ -111,8 +113,34 @@ public class CategoriesFragment extends CoreFragment {
                 }
             }
         });
+
+
+        categoryRecyclerView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
+            @Override
+            public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+                mActivity.loge("DDDDDDD " + scrollY);
+            }
+
+            @Override
+            public void onDownMotionEvent() {
+            }
+
+            @Override
+            public void onUpOrCancelMotionEvent(ObservableScrollState observableScrollState) {
+                mActivity.loge("okokokokkokoo");
+                if (observableScrollState == ObservableScrollState.DOWN) {
+//                    categoryRecyclerView.showToolbar(toolbar, ultimateRecyclerView, getScreenHeight());
+                } else if (observableScrollState == ObservableScrollState.UP) {
+//                    categoryRecyclerView.hideToolbar(toolbar, ultimateRecyclerView, getScreenHeight());
+                } else if (observableScrollState == ObservableScrollState.STOP) {
+                }
+            }
+        });
+
+
         getAllCategory(Configs.CATEGORY_PAGE_LIMIT, mCurrentCategoryPage);
     }
+    private int scrollOld = 0;
 
     @Override
     public void onClick(View view) {
