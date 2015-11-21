@@ -1,5 +1,6 @@
-package com.j4f;
+package com.j4f.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.j4f.R;
 import com.j4f.cores.CoreActivity;
 import com.j4f.fragments.CategoriesFragment;
 import com.j4f.fragments.QuestionsFragment;
@@ -40,6 +42,8 @@ public class MainActivity extends CoreActivity
         initModels();
         initListeners();
         initAnimations();
+
+        startActivity(new Intent(this, PostOfferActivity.class));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
