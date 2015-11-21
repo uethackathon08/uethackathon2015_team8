@@ -8,15 +8,17 @@ import java.util.Date;
 public class Answer {
     private String userId;
     private String nameOfUser;
+    private String userAvatarLink;
     private String content;
     private String imageLink;
     private int voteUp;
     private int voteDown;
     private Date timestamp;
 
-    public Answer(String userId, String nameOfUser, String content, String imageLink, int voteUp, int voteDown, Date timestamp) {
+    public Answer(String userId, String nameOfUser, String userAvatarLink, String content, String imageLink, int voteUp, int voteDown, Date timestamp) {
         this.userId = userId;
         this.nameOfUser = nameOfUser;
+        this.userAvatarLink = userAvatarLink;
         this.content = content;
         this.imageLink = imageLink;
         this.voteUp = voteUp;
@@ -38,6 +40,14 @@ public class Answer {
 
     public void setNameOfUser(String nameOfUser) {
         this.nameOfUser = nameOfUser;
+    }
+
+    public String getUserAvatarLink() {
+        return userAvatarLink;
+    }
+
+    public void setUserAvatarLink(String userAvatarLink) {
+        this.userAvatarLink = userAvatarLink;
     }
 
     public String getContent() {

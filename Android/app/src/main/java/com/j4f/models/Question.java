@@ -12,6 +12,8 @@ public class Question {
     private ArrayList<Category> categoryList;
     private String userId;
     private String nameOfUser;
+    private String userAvatarLink;
+    private String title;
     private String content;
     private String imageLink;
     private Date timestamp;
@@ -20,10 +22,12 @@ public class Question {
     private int share;
     private ArrayList<Answer> answersList;
 
-    public Question(ArrayList<Category> categoryList, String userId, String nameOfUser, String content, String imageLink, Date timestamp, int voteUp, int voteDown, int share, ArrayList<Answer> answersList) {
+    public Question(ArrayList<Category> categoryList, String userId, String nameOfUser, String userAvatarLink, String title, String content, String imageLink, Date timestamp, int voteUp, int voteDown, int share, ArrayList<Answer> answersList) {
         this.categoryList = categoryList;
         this.userId = userId;
         this.nameOfUser = nameOfUser;
+        this.userAvatarLink = userAvatarLink;
+        this.title = title;
         this.content = content;
         this.imageLink = imageLink;
         this.timestamp = timestamp;
@@ -55,6 +59,22 @@ public class Question {
 
     public void setNameOfUser(String nameOfUser) {
         this.nameOfUser = nameOfUser;
+    }
+
+    public String getUserAvatarLink() {
+        return userAvatarLink;
+    }
+
+    public void setUserAvatarLink(String userAvatarLink) {
+        this.userAvatarLink = userAvatarLink;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {

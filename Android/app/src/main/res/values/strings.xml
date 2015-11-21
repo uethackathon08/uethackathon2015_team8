@@ -26,4 +26,6 @@
     <string name="tab_categories">Categories</string>
     <string name="tab_questions">Questions</string>
     <string name="tab_tutors">Tutors</string>
+    <string name="title_activity_question_details">QuestionDetailsActivity</string>
+
 </resources>
