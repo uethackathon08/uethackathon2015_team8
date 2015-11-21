@@ -22,7 +22,7 @@ import com.j4f.R;
 import com.j4f.cores.CoreActivity;
 import com.j4f.fragments.CategoriesFragment;
 import com.j4f.fragments.QuestionsFragment;
-import com.j4f.fragments.TutorsFragment;
+import com.j4f.fragments.OffersFragment;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -38,7 +38,6 @@ public class MainActivity extends CoreActivity
     private Boolean isFabOpen = false;
     private Animation fab_open, fab_close, rotate_backward, rotate_forward;
     private FloatingActionButton fab, fab1, fab2;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +65,6 @@ public class MainActivity extends CoreActivity
         // insert all tabs from pagerAdapter data
         for (int i = 0; i < adapter.getCount(); i++) {
             tabHost.addTab(tabHost.newTab().setText(adapter.getPageTitle(i)).setTabListener(this));
-
         }
         fab_open = AnimationUtils.loadAnimation(this, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(this, R.anim.fab_close);
@@ -96,7 +94,8 @@ public class MainActivity extends CoreActivity
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -131,7 +130,7 @@ public class MainActivity extends CoreActivity
                 case 1:
                     return QuestionsFragment.getInstance(MainActivity.this);
                 case 2:
-                    return TutorsFragment.getInstance(MainActivity.this);
+                    return OffersFragment.getInstance(MainActivity.this);
                 default:
                     break;
             }
@@ -147,6 +146,15 @@ public class MainActivity extends CoreActivity
         public CharSequence getPageTitle(int position) {
             return position == 0 ? getResources().getString(R.string.tab_categories) : position == 1 ? getResources().getString(R.string.tab_questions) : getResources().getString(R.string.tab_tutors);
         }
+    }
+
+    public void hideActionbarAndFloatingButton() {
+        getSupportActionBar().hide();
+        fab.hide();
+    }
+    public void showActionbarAndFloatingButton() {
+        getSupportActionBar().show();
+        fab.show();
     }
 
     @Override

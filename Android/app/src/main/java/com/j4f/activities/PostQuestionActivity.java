@@ -162,9 +162,9 @@ public class PostQuestionActivity extends CoreActivity {
             case R.id.post_button:
                 String url = BASE_URL + "question/new";
                 Map<String, String> params = new HashMap<>();
-                params.put("tags", "tag1");
-                params.put("title", "Test");
-                params.put("content", "content");
+                params.put("tags", "Thật là vui");
+                params.put("title", "Vui Vui Vui : Đại ca thống");
+                params.put("content", "Ha ha ha");
                 params.put("users_id", MyApplication.USER_ID);
                 File imgFile = new File(mCurrentPhotoPath);
                 Bitmap bm = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -173,6 +173,7 @@ public class PostQuestionActivity extends CoreActivity {
                 byte[] b = baos.toByteArray();
                 String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
                 params.put("photo",encodedImage);
+                Log.d("Hello world",encodedImage);
                 CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
