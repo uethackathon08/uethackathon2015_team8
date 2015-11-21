@@ -1,10 +1,10 @@
 package com.j4f.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.j4f.R;
@@ -14,7 +14,6 @@ import com.j4f.models.Offer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -70,6 +69,17 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.DataObjectHo
             e.printStackTrace();
         }
 
+        LinearLayout.LayoutParams lp = new
+                LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        for (String tag : c.getTags()) {
+            TextView tv = (TextView) View.inflate(context, R.layout.textview_for_tag, null);
+            lp.setMargins(0, 0, 16, 0);
+            tv.setLayoutParams(lp);
+
+            tv.setText(tag);
+            holder.tags_list.addView(tv);
+        }
     }
 
     @Override
@@ -84,6 +94,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.DataObjectHo
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder {
         public TextView title, content, number_bids, time_past;
+        public LinearLayout tags_list;
 
         public DataObjectHolder(View itemView, int type) {
             super(itemView);
@@ -91,6 +102,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.DataObjectHo
             content = (TextView) itemView.findViewById(R.id.content);
             number_bids = (TextView) itemView.findViewById(R.id.number_bids);
             time_past = (TextView) itemView.findViewById(R.id.time_past);
+            tags_list = (LinearLayout) itemView.findViewById(R.id.tags_list);
         }
     }
 }

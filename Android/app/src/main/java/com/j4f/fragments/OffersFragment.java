@@ -21,6 +21,7 @@ import com.j4f.cores.CoreActivity;
 import com.j4f.cores.CoreFragment;
 import com.j4f.models.Offer;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,6 +61,7 @@ public class OffersFragment extends CoreFragment {
         offersList = new ArrayList<Offer>();
         offerAdapter = new OfferAdapter(offersList, mActivity);
         offerRecyclerView.setHasFixedSize(true);
+        offerRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         offerRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         offerRecyclerView.setAdapter(offerAdapter);
         offerRecyclerView.enableLoadmore();

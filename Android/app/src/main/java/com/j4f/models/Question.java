@@ -20,11 +20,12 @@ public class Question {
     private int voteDown;
     private int share;
     private ArrayList<Answer> answersList;
+    private String[] tags;
 
     public Question(ArrayList<Category> categoryList, String id, String userId,
                     String nameOfUser, String userAvatarLink, String title,
                     String content, String imageLink, Date timestamp, int voteUp,
-                    int voteDown, int share, ArrayList<Answer> answersList) {
+                    int voteDown, int share, ArrayList<Answer> answersList, String[] tags) {
         this.categoryList = categoryList;
         this.id = id;
         this.userId = userId;
@@ -38,6 +39,8 @@ public class Question {
         this.voteDown = voteDown;
         this.share = share;
         this.answersList = answersList;
+        this.tags = tags;
+
     }
 
     public ArrayList<Category> getCategoryList() {
@@ -142,5 +145,13 @@ public class Question {
 
     public void setAnswersList(ArrayList<Answer> answersList) {
         this.answersList = answersList;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
     }
 }
