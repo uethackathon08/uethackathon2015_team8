@@ -16,27 +16,28 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TimePicker;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.j4f.R;
 import com.j4f.adapters.TimeSlotArrayAdapter;
 import com.j4f.application.MyApplication;
 import com.j4f.cores.CoreActivity;
 import com.j4f.models.TimeSlot;
+import com.j4f.utils.CustomRequest;
 import com.j4f.utils.TimeUtils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostOfferActivity extends CoreActivity {
 
-    private final String BASE_URL = "http://188.166.241.34/hackathon/j4f";
+    private static final String BASE_URL = "http://188.166.241.34/hackathon/j4f/";
 
     private EditText mTitleText;
     private EditText mContactText;
@@ -149,17 +150,26 @@ public class PostOfferActivity extends CoreActivity {
                 showDatePicker();
                 break;
             case R.id.post_button:
-                try {
-                    String url = BASE_URL + "/offer/new";
-                    JSONObject jsonBody = new JSONObject();
-                    jsonBody.put("tags", "tag1;tag2");
-                    jsonBody.put("title", "Test offer");
-                    jsonBody.put("content", "Test content");
-                    jsonBody.put("users_id", "564fcd05a7292");
-                    makeJsonObjectRequest(url, jsonBody);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                String url = BASE_URL + "offer/new";
+                Map<String, String> params = new HashMap<>();
+                params.put("tags", "tag1");
+                params.put("title", "Test");
+                params.put("content", "content");
+                params.put("users_id", "564fcd05a7292");
+
+                CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        showToastLong(response.toString());
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        showToastLong("Error");
+                    }
+                });
+
+                MyApplication.getInstance().addToRequestQueue(jsObjRequest);
                 break;
             default:
                 break;
@@ -219,43 +229,6 @@ public class PostOfferActivity extends CoreActivity {
                 + (listView.getDividerHeight() * (mTimeSlotArrayAdapter.getCount() - 1));
         listView.setLayoutParams(params);
         listView.requestLayout();
-    }
-
-    public void makeJsonObjectRequest(String url, final JSONObject jsonBody) {
-        JsonObjectRequest req = new JsonObjectRequest(url, jsonBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            VolleyLog.v("Post_offer:%n %s", response.toString(4));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.e("Error: ", error.getMessage());
-                    }
-        });
-
-        MyApplication.getInstance().addToRequestQueue(req, TAG_JSONOBJ_REQUEST);
-
-//        mListener.onBefore();
-//
-//        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.POST, url,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        mListener.onResponse(response);
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                mListener.onError(error);
-//            }
-//        });
-//        MyApplication.getInstance().addToRequestQueue(jsonObjRequest, TAG_JSONOBJ_REQUEST);
     }
 }
 
