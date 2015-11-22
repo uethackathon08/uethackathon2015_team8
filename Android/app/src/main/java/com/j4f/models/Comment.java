@@ -6,6 +6,7 @@ import java.util.Date;
  * Created by hunter on 11/22/2015.
  */
 public class Comment {
+    private String userId;
     private String userName;
     private String avatarLink;
     private Date timestamp;
@@ -13,13 +14,22 @@ public class Comment {
     private int voteUp;
     private int voteDown;
 
-    public Comment(String userName, String avatarLink, Date timestamp, String content, int voteUp, int voteDown) {
+    public Comment(String userId, String userName, String avatarLink, Date timestamp, String content, int voteUp, int voteDown) {
+        this.userId = userId;
         this.userName = userName;
         this.avatarLink = avatarLink;
         this.timestamp = timestamp;
         this.content = content;
         this.voteUp = voteUp;
         this.voteDown = voteDown;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {

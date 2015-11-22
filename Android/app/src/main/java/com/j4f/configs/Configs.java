@@ -11,6 +11,7 @@ public class Configs {
     public static String GET_ALL_CATEGORIES = "/tag";
     public static String GET_ALL_OFFERS = "/offer";
     public static String GET_ALL_QUESTIONS = "/question";
+    public static String GET_ALL_COMMENTS = "/answer";
 
 
     public static int QUESTION_PAGE_LIMIT = 10;
