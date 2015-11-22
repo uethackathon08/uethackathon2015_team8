@@ -23,6 +23,7 @@ import com.j4f.cores.CoreActivity;
 import com.j4f.fragments.CategoriesFragment;
 import com.j4f.fragments.QuestionsFragment;
 import com.j4f.fragments.OffersFragment;
+import com.j4f.models.Account;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -38,6 +39,9 @@ public class MainActivity extends CoreActivity
     private Boolean isFabOpen = false;
     private Animation fab_open, fab_close, rotate_backward, rotate_forward;
     private FloatingActionButton fab, fab1, fab2;
+
+    public static Account currentAccount;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,7 +168,11 @@ public class MainActivity extends CoreActivity
 
     @Override
     public void initModels() {
-
+        Intent i = getIntent();
+        String id = i.getStringExtra("id");
+        String name = i.getStringExtra("username");
+        String avatar = i.getStringExtra("avatar");
+        currentAccount = new Account(id, avatar, name);
     }
 
     @Override
@@ -195,16 +203,10 @@ public class MainActivity extends CoreActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
