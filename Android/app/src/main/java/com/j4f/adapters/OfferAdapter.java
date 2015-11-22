@@ -32,6 +32,10 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.DataObjectHo
         this.dataSet = myDataSet;
     }
 
+    public Offer getItem(int i) {
+        return dataSet.get(i);
+    }
+
     @Override
     public OfferAdapter.DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;

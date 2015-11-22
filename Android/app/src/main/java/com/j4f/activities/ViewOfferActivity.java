@@ -350,10 +350,14 @@ public class ViewOfferActivity extends CoreActivity {
                     rootView = inflater.inflate(R.layout.fragment_view_offer_bids, container, false);
                     mTutorListView = (ListView) rootView.findViewById(R.id.tutor_listview);
                     mTutorList = new ArrayList<>();
-                    for (int i = 0; i < 10; i++) {
-                        Account tutor = new Account("Trần Đại Số", (int) (Math.random() * (500 - 10)));
-                        mTutorList.add(tutor);
-                    }
+
+                    mTutorList.add(new Account("Trần Đại Số", (int) (Math.random() * (500 - 10))));
+                    mTutorList.add(new Account("Nuyễn Giải Tích", (int) (Math.random() * (500 - 10))));
+                    mTutorList.add(new Account("Hồ Học Máy", (int) (Math.random() * (500 - 10))));
+                    mTutorList.add(new Account("Vũ Luật", (int) (Math.random() * (500 - 10))));
+                    mTutorList.add(new Account("Trần Ma Két Tinh", (int) (Math.random() * (500 - 10))));
+                    mTutorList.add(new Account("Thích Học Giỏi", (int) (Math.random() * (500 - 10))));
+
                     mTutorArrayAdapter = new TutorArrayAdapter((CoreActivity) this.getContext(), R.layout.item_tutor, mTutorList);
                     mTutorListView.setAdapter(mTutorArrayAdapter);
                     mTutorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -1,15 +1,20 @@
 package com.j4f.activities;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.j4f.R;
+import com.j4f.application.MyApplication;
 import com.j4f.configs.Configs;
 import com.j4f.cores.CoreActivity;
 import com.j4f.network.J4FClient;
@@ -40,7 +45,18 @@ public class SigninActivity extends CoreActivity {
         initListeners();
         initAnimations();
 
+        if (Build.VERSION.SDK_INT >= 21) {
+            setStatusBarColor();
+        }
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void setStatusBarColor() {
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
     @Override
@@ -126,9 +142,11 @@ public class SigninActivity extends CoreActivity {
                         String username = data.getString("username");
                         String avatar = data.getString("avatar");
                         Intent intent = new Intent(SigninActivity.this, MainActivity.class);
+                        MyApplication.USER_ID = id;
                         intent.putExtra("id", id);
                         intent.putExtra("username", username);
                         intent.putExtra("avatar", avatar);
+                        finish();
                         startActivity(intent);
                         removePreviousDialog("Login");
                     }

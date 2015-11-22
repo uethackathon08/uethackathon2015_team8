@@ -87,12 +87,15 @@ public class OffersFragment extends CoreFragment {
                 getAllOffers(Configs.OFFER_PAGE_LIMIT, mCurrentOfferPage);
             }
         });
-        offerRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        offerRecyclerView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String offerID = offerAdapter.getItem(0).getId();
+//                Intent intent = new Intent(mActivity.getBaseContext(), ViewOfferActivity.class);
+//                intent.putExtra("offerID", offerID);
+//                startActivity(intent);
+//            }
+//        });
         getAllOffers(Configs.OFFER_PAGE_LIMIT, mCurrentOfferPage);
     }
     public void getAllOffers(final int limit, final int page) {

@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:gravity="center"
-                android:text="Welcome to student tutoring network StutNet"
+                android:text="Welcome to student tutoring network Stuber"
                 android:textColor="@color/lightgray"
                 android:textSize="18dp" />
 

@@ -1,9 +1,13 @@
 package com.j4f.activities;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.j4f.R;
@@ -31,18 +35,29 @@ public class GetStartedActivity extends CoreActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), SignupActivity.class);
+                finish();
                 startActivity(intent);
             }
         });
-
-        startActivity(new Intent(GetStartedActivity.this, PostOfferActivity.class));
 
         initViews();
         initModels();
         initListeners();
         initAnimations();
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            setStatusBarColor();
+        }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void setStatusBarColor() {
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+    }
+    
     @Override
     public void initViews() {
         signIn = (Button)findViewById(R.id.btn_signin);
