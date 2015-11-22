@@ -4,6 +4,8 @@ package com.j4f.models;
  * Created by hunter on 11/21/2015.
  */
 public class Account {
+    private String avatarLink;
+    private String id;
     private String username;
     private String password;
     private String name;
@@ -20,6 +22,28 @@ public class Account {
         this.mobile = mobile;
         this.reputation = reputation;
         this.credit = credit;
+    }
+
+    public Account(String id, String avatarLink, String name) {
+        this.id = id;
+        this.avatarLink = avatarLink;
+        this.name = name;
+    }
+
+    public String getAvatarLink() {
+        return avatarLink;
+    }
+
+    public void setAvatarLink(String avatarLink) {
+        this.avatarLink = avatarLink;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Account(String username, int reputation) {

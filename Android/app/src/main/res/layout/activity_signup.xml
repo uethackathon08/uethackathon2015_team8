@@ -70,18 +70,6 @@
                 android:textColor="@color/gray"
                 android:textColorHint="@color/lightgray" />
 
-            <AutoCompleteTextView
-                android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="-1dp"
-                android:background="@drawable/no_rounded_border"
-                android:hint="@string/prompt_username"
-                android:inputType="textAutoComplete"
-                android:paddingLeft="30dp"
-                android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textColorHint="@color/lightgray" />
 
             <com.j4f.customizes.MyEditText
                 android:id="@+id/password"
