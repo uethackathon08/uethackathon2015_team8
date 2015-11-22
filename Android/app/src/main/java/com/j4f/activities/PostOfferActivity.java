@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -260,12 +261,13 @@ public class PostOfferActivity extends CoreActivity implements TokenCompleteText
                     public void onResponse(JSONObject response) {
                         removePreviousDialog();
                         finish();
+                        startActivity(new Intent(PostOfferActivity.this, ViewOfferActivity.class));
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         removePreviousDialog();
-                        showToastLong("Error");
+                        alert("Error when posting your offer");
                     }
                 });
 

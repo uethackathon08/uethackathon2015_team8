@@ -76,6 +76,7 @@ public class ViewOfferActivity extends CoreActivity {
     @Override
     public void initViews() {
         mBidButton = (Button) findViewById(R.id.bid_button);
+//        mBidButton.setVisibility(View.GONE);
     }
 
     @Override
