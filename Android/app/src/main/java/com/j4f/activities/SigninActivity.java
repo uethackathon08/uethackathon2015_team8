@@ -66,7 +66,7 @@ public class SigninActivity extends CoreActivity {
     }
 
     public void login(final String username, final String password ) {
-        showProgressDialog("Logging in ...");
+        showProgressDialog("Login", "Logging in ...");
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.POST, Configs.BASE_URL + Configs.LOGIN,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -74,7 +74,7 @@ public class SigninActivity extends CoreActivity {
                         showToastLong(response.toString());
                         Intent intent = new Intent(getBaseContext(),MainActivity.class);
                         startActivity(intent);
-                        removePreviousDialog();
+                        removePreviousDialog("Login");
 //                        mListener.onResponse(response);
                     }
                 }, new Response.ErrorListener() {
@@ -82,7 +82,7 @@ public class SigninActivity extends CoreActivity {
             public void onErrorResponse(VolleyError error) {
 //                mListener.onError(error);
                 loge(error.getMessage());
-                removePreviousDialog();
+                removePreviousDialog("Login");
             }
         }) {
             @Override

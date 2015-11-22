@@ -91,7 +91,7 @@ public class QuestionsFragment extends CoreFragment {
         getAllQuestion(Configs.QUESTION_PAGE_LIMIT, mCurrentQuestionPage);
     }
     public void getAllQuestion(final int limit, final int page) {
-        mContext.showProgressDialog("Loading questions ...");
+        mContext.showProgressDialog("Question Fragment", "Loading questions ...");
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Configs.BASE_URL +
                 Configs.GET_ALL_QUESTIONS +  "?limit=" + limit + "&page=" + page,
                 new Response.Listener<JSONObject>() {
@@ -138,13 +138,13 @@ public class QuestionsFragment extends CoreFragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        mContext.removePreviousDialog();
+                        mContext.removePreviousDialog("Question Fragment");
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mContext.loge(error.getMessage());
-                mContext.removePreviousDialog();
+                mContext.removePreviousDialog("Question Fragment");
             }
         });
         MyApplication.getInstance().addToRequestQueue(jsonObjRequest, Configs.TAG_JSONOBJ_REQUEST);

@@ -14,7 +14,7 @@ public class MyApplication extends Application {
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static MyApplication mInstance;
-    public static String USER_ID = "564fcd05a7292";
+    public static String USER_ID = "56512dd53ee52";
 
     @Override
     public void onCreate() {

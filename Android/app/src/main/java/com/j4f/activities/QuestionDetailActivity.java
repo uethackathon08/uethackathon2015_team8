@@ -118,7 +118,7 @@ public class QuestionDetailActivity extends CoreActivity {
         getALlComment(questionId, Configs.COMMENT_PAGE_LIMIT, mCurrentCommentPage);
     }
     public void getALlComment(final String qId, final int limited, final int page) {
-        showProgressDialog("Loading offers ...");
+        showProgressDialog("Question Detail Fragment", "Loading offers ...");
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Configs.BASE_URL +
                 Configs.GET_ALL_COMMENTS + "?questions_id=" + qId + "&limit=" + limited + "&page=" + page,
                 new Response.Listener<JSONObject>() {
@@ -161,13 +161,13 @@ public class QuestionDetailActivity extends CoreActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        removePreviousDialog();
+                        removePreviousDialog("Question Detail Fragment");
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loge(error.getMessage());
-                removePreviousDialog();
+                removePreviousDialog("Question Detail Fragment");
             }
         });
         MyApplication.getInstance().addToRequestQueue(jsonObjRequest, Configs.TAG_JSONOBJ_REQUEST);

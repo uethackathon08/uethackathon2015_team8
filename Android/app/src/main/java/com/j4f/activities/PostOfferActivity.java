@@ -259,20 +259,21 @@ public class PostOfferActivity extends CoreActivity implements TokenCompleteText
                 CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        removePreviousDialog();
+                        removePreviousDialog("PostOffer Fragment");
                         finish();
                         startActivity(new Intent(PostOfferActivity.this, ViewOfferActivity.class));
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        removePreviousDialog();
                         alert("Error when posting your offer");
+                        removePreviousDialog("PostOffer Fragment");
+                        showToastLong("Error");
                     }
                 });
 
                 MyApplication.getInstance().addToRequestQueue(jsObjRequest);
-                showProgressDialog("Posting...");
+                showProgressDialog("PostOffer Fragment", "Posting...");
                 break;
             default:
                 break;

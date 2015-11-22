@@ -35,7 +35,7 @@ public class GetStartedActivity extends CoreActivity {
             }
         });
 
-        startActivity(new Intent(GetStartedActivity.this, ViewOfferActivity.class));
+        startActivity(new Intent(GetStartedActivity.this, PostQuestionActivity.class));
 
         initViews();
         initModels();
