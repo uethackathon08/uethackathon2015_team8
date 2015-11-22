@@ -76,7 +76,7 @@ public class TutorArrayAdapter extends ArrayAdapter<Account> {
         }
 
         holder.name.setText(model.getUsername());
-        holder.reputation.setText("12 Tutors • " + "Reputation: " + model.getReputation());
+        holder.reputation.setText( (int) (Math.random() * (50 - 1)) + " Tutors • " + "Reputation: " + model.getReputation());
 
         return convertView;
     }
