@@ -170,8 +170,10 @@ public class QuestionDetailActivity extends CoreActivity {
                                     String userId = jo.getString("users_id");
                                     String upvotes = jo.getString("upvotes");
                                     String downvotes = jo.getString("downvotes");
+                                    String avatar = jo.getString("avatar");
                                     String date = jo.getString("created_at");
-                                    addComment(new Comment(userId, MainActivity.currentAccount.getUsername(), photo, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date),
+                                    String name = jo.getString("username");
+                                    addComment(new Comment(userId, name, avatar, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date),
                                             content, Integer.parseInt(upvotes), Integer.parseInt(downvotes)));
                                 }
                                 commentRecyclerView.setRefreshing(false);
