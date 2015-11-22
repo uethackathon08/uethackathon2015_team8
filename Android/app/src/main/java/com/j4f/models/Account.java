@@ -22,6 +22,11 @@ public class Account {
         this.credit = credit;
     }
 
+    public Account(String username, int reputation) {
+        this.username = username;
+        this.reputation = reputation;
+    }
+
     public String getUsername() {
         return username;
     }
