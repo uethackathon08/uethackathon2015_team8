@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.j4f.R;
+import com.j4f.application.MyApplication;
 import com.j4f.configs.Configs;
 import com.j4f.cores.CoreActivity;
 import com.j4f.network.J4FClient;
@@ -86,6 +87,7 @@ public class SignupActivity extends CoreActivity {
                         String avatar = data.getString("avatar");
                         Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                         intent.putExtra("id", id);
+                        MyApplication.USER_ID = id;
                         intent.putExtra("username", username);
                         intent.putExtra("avatar", avatar);
                         startActivity(intent);
