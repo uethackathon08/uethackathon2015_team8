@@ -24,7 +24,7 @@ import com.j4f.network.J4FClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -36,8 +36,6 @@ import java.util.Date;
 import cz.msebera.android.httpclient.Header;
 
 public class PostQuestionActivity extends CoreActivity {
-
-    private static final String BASE_URL = "http://188.166.241.34/hackathon/j4f/";
 
     private EditText mTitleText;
     private EditText mDescriptionText;
@@ -188,33 +186,46 @@ public class PostQuestionActivity extends CoreActivity {
 //
 //                MyApplication.getInstance().addToRequestQueue(jsObjRequest);
 
-                RequestParams params = new RequestParams();
-                params.put("tags", "Thật là vui");
-                params.put("title", "Vui Vui Vui : Đại ca thống");
-                params.put("content", "Ha ha ha");
-                params.put("users_id", MyApplication.USER_ID);
-                try {
-                    Log.e("mCurrentPhotoPath", mCurrentPhotoPath);
-                    params.put("photo", new File(mCurrentPhotoPath));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                if (mTitleText.getText().toString().isEmpty() || mDescriptionText.getText().toString().isEmpty()) {
+                    Toast.makeText(this, "Please input title and description!", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    RequestParams params = new RequestParams();
+                    params.put("tags", "Thật là vui");
+                    params.put("title", mTitleText.getText().toString());
+                    params.put("content", mDescriptionText.getText().toString());
+                    params.put("users_id", MyApplication.USER_ID);
+                    if (mCurrentPhotoPath != null) {
+                        try {
+                            params.put("photo", new File(mCurrentPhotoPath));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    String url = "question/new";
+                    J4FClient.post(url, params, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                            try {
+                                if (response.getString("status").equals("ok")) {
+                                    // TODO go to detail page
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable e) {
+                            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                            Log.e("onFailure", e.toString());
+                            Log.e("errorResponse", errorResponse);
+                        }
+                    });
+                    break;
                 }
-
-                String url = "question/new";
-                J4FClient.post(url, params, new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable e) {
-                        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                        Log.e("onFailure", e.toString());
-                        Log.e("errorResponse", errorResponse);
-                    }
-                });
-                break;
         }
     }
 }
