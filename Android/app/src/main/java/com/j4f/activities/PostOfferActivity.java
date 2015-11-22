@@ -280,7 +280,7 @@ public class PostOfferActivity extends CoreActivity implements TokenCompleteText
     private void alert(final String title) {
         AlertDialog alertDialog = new AlertDialog.Builder(PostOfferActivity.this).create();
         alertDialog.setTitle(title);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
