@@ -1,5 +1,6 @@
 package com.j4f.adapters;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.j4f.R;
+import com.j4f.activities.ViewOfferActivity;
 import com.j4f.cores.CoreActivity;
 import com.j4f.models.Offer;
 
@@ -47,6 +49,32 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.DataObjectHo
     public void onBindViewHolder(OfferAdapter.DataObjectHolder holder, int position) {
         final Offer c = dataSet.get(position);
         holder.title.setText(c.getTitle());
+
+
+
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.loge("Click");
+                Intent intent = new Intent(context, ViewOfferActivity.class);
+                intent.putExtra("offerID", c.getId());
+                intent.putExtra("title", c.getTitle());
+                intent.putExtra("content", c.getContent());
+
+                String tags = "";
+                for (String tag : c.getTags()) {
+                    tags += tag + ";";
+                }
+
+
+                intent.putExtra("tags", tags);
+
+                intent.putExtra("time", "000000;000000");
+                context.startActivity(intent);
+            }
+        });
+
+
         holder.content.setText(c.getContent());
 
         holder.number_bids.setText("0 bid");

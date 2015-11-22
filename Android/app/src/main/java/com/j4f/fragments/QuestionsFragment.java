@@ -80,16 +80,20 @@ public class QuestionsFragment extends CoreFragment {
         questionRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                questionList = new ArrayList<Question>();
-                questionAdapter = new QuestionAdapter(questionList, mActivity);
-                questionAdapter.notifyDataSetChanged();
-                questionRecyclerView.setAdapter(questionAdapter);
-                mMaxQuestion = -1;
-                mCurrentQuestionPage = 1;
-                mLimit = -1;
-                getAllQuestion(Configs.QUESTION_PAGE_LIMIT, mCurrentQuestionPage);
+                reload();
             }
         });
+        getAllQuestion(Configs.QUESTION_PAGE_LIMIT, mCurrentQuestionPage);
+    }
+
+    public void reload() {
+        questionList = new ArrayList<Question>();
+        questionAdapter = new QuestionAdapter(questionList, mActivity);
+        questionAdapter.notifyDataSetChanged();
+        questionRecyclerView.setAdapter(questionAdapter);
+        mMaxQuestion = -1;
+        mCurrentQuestionPage = 1;
+        mLimit = -1;
         getAllQuestion(Configs.QUESTION_PAGE_LIMIT, mCurrentQuestionPage);
     }
 
@@ -186,6 +190,12 @@ public class QuestionsFragment extends CoreFragment {
             mInstance = new QuestionsFragment();
         }
         mActivity = activity;
+        return mInstance;
+    }
+    public static QuestionsFragment getInstance() {
+        if (mInstance == null) {
+            mInstance = new QuestionsFragment();
+        }
         return mInstance;
     }
 
