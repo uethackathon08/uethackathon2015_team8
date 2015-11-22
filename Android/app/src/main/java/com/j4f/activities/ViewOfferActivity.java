@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,9 +24,17 @@ import com.j4f.R;
 import com.j4f.adapters.TutorArrayAdapter;
 import com.j4f.cores.CoreActivity;
 import com.j4f.models.Account;
+import com.j4f.network.J4FClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 public class ViewOfferActivity extends CoreActivity {
 
@@ -45,6 +54,12 @@ public class ViewOfferActivity extends CoreActivity {
     private ViewPager mViewPager;
 
     private Button mBidButton;
+    private static String offerID;
+    private static String title;
+    private static String content;
+    private static String tags;
+    private static String contact;
+    private static String time;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +70,13 @@ public class ViewOfferActivity extends CoreActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Offer");
+
+        offerID = getIntent().getStringExtra("offerID");
+        title = getIntent().getStringExtra("title");
+        content = getIntent().getStringExtra("content");
+        tags = getIntent().getStringExtra("tags");
+        contact = getIntent().getStringExtra("contact");
+        time = getIntent().getStringExtra("time");
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -72,6 +94,56 @@ public class ViewOfferActivity extends CoreActivity {
         initListeners();
         initAnimations();
     }
+
+//    private void loadData(String offerID) {
+//        String url = Constant.BASE_URL + "offer/new";
+//        Map<String, String> params = new HashMap<>();
+//        String tags = "";
+//        for (String tag : mOfferedTags) {
+//            tags += tag + ";";
+//        }
+//        params.put("tags", tags);
+//        params.put("title", title);
+//        params.put("content", content);
+//        params.put("users_id", MyApplication.USER_ID);
+//        if (contact != null) params.put("phone", contact);
+//
+//        if (mTimeSlotList.size() > 0) {
+//            String time = "";
+//            for (TimeSlot timeSlot : mTimeSlotList) {
+//                time += timeSlot.getDatetime().getTimeInMillis() + ";";
+//            }
+//            params.put("time", time);
+//        }
+//
+//        CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                removePreviousDialog("PostOffer Fragment");
+//                String offerID = "";
+//                try {
+//                    offerID = response.get("data").toString();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                finish();
+//
+//                Intent intent = new Intent(getBaseContext(), ViewOfferActivity.class);
+//                intent.putExtra("offerID", offerID);
+//                startActivity(intent);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                alert("Error when posting your offer");
+//                removePreviousDialog("PostOffer Fragment");
+//                showToastLong("Error");
+//            }
+//        });
+//
+//        MyApplication.getInstance().addToRequestQueue(jsObjRequest);
+//        showProgressDialog("PostOffer Fragment", "Posting...");
+//    }
 
     @Override
     public void initViews() {
@@ -217,15 +289,60 @@ public class ViewOfferActivity extends CoreActivity {
                     LinearLayout.LayoutParams lp = new
                             LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                    List<String> tags = new ArrayList<>();
-                    tags.add("Tag 1");
-                    tags.add("Tag 2");
-                    for (String tag : tags) {
-                        TextView tv = (TextView) inflater.inflate(R.layout.textview_for_tag, null);
-                        lp.setMargins(0, 0, 16, 0);
-                        tv.setLayoutParams(lp);
-                        tv.setText(tag);
-                        tagsLayout.addView(tv);
+                    if (offerID != null) {
+                        RequestParams params = new RequestParams();
+                        params.put("offers_id", offerID);
+
+                        String url = "offer/detail";
+                        J4FClient.post(url, params, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                try {
+                                    if (response.getString("status").equals("ok")) {
+                                        // TODO go to detail page
+                                        title = response.getString("title");
+                                        content = response.getString("content");
+                                        tags = response.getString("tags");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable e) {
+                                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                                Log.e("onFailure", e.toString());
+                                Log.e("errorResponse", errorResponse);
+                            }
+                        });
+
+                        // view infor
+                        TextView titleText = (TextView) rootView.findViewById(R.id.title);
+                        titleText.setText(title);
+                        TextView contentText = (TextView) rootView.findViewById(R.id.content);
+                        contentText.setText(content);
+                        String[] tagList = tags.split(";");
+                        for (String tag : tagList) {
+                            TextView tv = (TextView) inflater.inflate(R.layout.textview_for_tag, null);
+                            lp.setMargins(0, 0, 16, 0);
+                            tv.setLayoutParams(lp);
+                            tv.setText(tag);
+                            tagsLayout.addView(tv);
+                        }
+
+                        offerID = null;
+                    } else {
+                        List<String> tags = new ArrayList<>();
+                        tags.add("Tag 1");
+                        tags.add("Tag 2");
+                        for (String tag : tags) {
+                            TextView tv = (TextView) inflater.inflate(R.layout.textview_for_tag, null);
+                            lp.setMargins(0, 0, 16, 0);
+                            tv.setLayoutParams(lp);
+                            tv.setText(tag);
+                            tagsLayout.addView(tv);
+                        }
                     }
 
                     break;

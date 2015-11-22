@@ -41,6 +41,7 @@ import com.j4f.utils.TimeUtils;
 import com.tokenautocomplete.FilteredArrayAdapter;
 import com.tokenautocomplete.TokenCompleteTextView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -219,9 +220,9 @@ public class PostOfferActivity extends CoreActivity implements TokenCompleteText
                 showDatePicker();
                 break;
             case R.id.post_button:
-                String title = mTitleText.getText().toString();
-                String content = mDescriptionText.getText().toString();
-                String contact = mContactText.getText().toString();
+                final String title = mTitleText.getText().toString();
+                final String content = mDescriptionText.getText().toString();
+                final String contact = mContactText.getText().toString();
 
                 if (title == null || title.length() < 10) {
                     alert("Title required more than 10 characters");
@@ -248,27 +249,44 @@ public class PostOfferActivity extends CoreActivity implements TokenCompleteText
                 params.put("users_id", MyApplication.USER_ID);
                 if (contact != null) params.put("phone", contact);
 
+                final String tagsString = tags;
+                String time = "";
                 if (mTimeSlotList.size() > 0) {
-                    String time = "";
                     for (TimeSlot timeSlot : mTimeSlotList) {
                         time += timeSlot.getDatetime().getTimeInMillis() + ";";
                     }
                     params.put("time", time);
                 }
 
+                final String timeString = time;
+
                 CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         removePreviousDialog("PostOffer Fragment");
+                        String offerID = "";
+                        try {
+                            offerID = response.get("data").toString();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         finish();
-                        startActivity(new Intent(PostOfferActivity.this, ViewOfferActivity.class));
+
+                        Intent intent = new Intent(getBaseContext(), ViewOfferActivity.class);
+                        intent.putExtra("offerID", offerID);
+                        intent.putExtra("title", title);
+                        intent.putExtra("content", content);
+                        intent.putExtra("tags", tagsString);
+                        intent.putExtra("time", timeString);
+
+                        startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         alert("Error when posting your offer");
                         removePreviousDialog("PostOffer Fragment");
-                        showToastLong("Error");
+                        showToastLong(error);
                     }
                 });
 
