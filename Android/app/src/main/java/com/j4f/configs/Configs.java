@@ -8,6 +8,7 @@ public class Configs {
     public static String BASE_URL = "http://188.166.241.34/hackathon/j4f/";
 
     public static String LOGIN = "/user/login";
+    public static String COMMENT = "/answer/new";
     public static String SIGNUP = "/user/register";
     public static String GET_ALL_CATEGORIES = "/tag";
     public static String GET_ALL_OFFERS = "/offer";
@@ -17,6 +18,6 @@ public class Configs {
 
     public static int QUESTION_PAGE_LIMIT = 10;
     public static int OFFER_PAGE_LIMIT = 10;
-    public static int COMMENT_PAGE_LIMIT = 100;
+    public static int COMMENT_PAGE_LIMIT = 20;
     public static int CATEGORY_PAGE_LIMIT = 10;
 }

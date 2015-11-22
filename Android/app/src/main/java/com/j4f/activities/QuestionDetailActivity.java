@@ -2,35 +2,55 @@ package com.j4f.activities;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.j4f.R;
 import com.j4f.adapters.CommentAdapter;
 import com.j4f.application.MyApplication;
+import com.j4f.application.Utils;
 import com.j4f.configs.Configs;
 import com.j4f.cores.CoreActivity;
+import com.j4f.interfaces.ImageRequestListener;
+import com.j4f.models.Account;
 import com.j4f.models.Comment;
+import com.j4f.network.J4FClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import cz.msebera.android.httpclient.Header;
 
 public class QuestionDetailActivity extends CoreActivity {
 
@@ -39,6 +59,11 @@ public class QuestionDetailActivity extends CoreActivity {
     private String nameOfUser;
     private String userAvatarLink;
     private String title;
+    private String photo, contentText;
+    private Date date;
+
+    private ImageView userAvatar;
+    private TextView quesTittle, nameUser, content, time;
 
     private boolean isSend = false;
 
@@ -62,6 +87,16 @@ public class QuestionDetailActivity extends CoreActivity {
         nameOfUser = i.getStringExtra("uName");
         userAvatarLink = i.getStringExtra("avatar");
         title = i.getStringExtra("title");
+        photo = i.getStringExtra("photo");
+        contentText = i.getStringExtra("content");
+
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            date = formatter.parse(i.getStringExtra("date"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(title);
         initViews();
@@ -80,14 +115,6 @@ public class QuestionDetailActivity extends CoreActivity {
     @TargetApi(Build.VERSION_CODES.M)
     public void initCommentList() {
         commentList = new ArrayList<Comment>();
-        commentList.add(new Comment("12345", "Việt Anh Vũ", "http://taigamemoinhat.com/wp-content/uploads/2013/04/girlxinh36.jpg", new Date(), "Lá thư viết vội, có tên rất lạ, chắc là người con thương rất nhiều. Một ngày mẹ thấy, con buồn vu vơ. Nụ dồ vẫn ở trong ngăn bàn. Là đâu đã tàn, hoa đâu đã vàng...", 15, 20));
-        commentList.add(new Comment("12345", "Việt Anh Vũ", "http://taigamemoinhat.com/wp-content/uploads/2013/04/girlxinh36.jpg", new Date(), "Lá thư viết vội, có tên rất lạ, chắc là người con thương rất nhiều. Một ngày mẹ thấy, con buồn vu vơ. Nụ dồ vẫn ở trong ngăn bàn. Là đâu đã tàn, hoa đâu đã vàng...", 15, 20));
-        commentList.add(new Comment("12345", "Việt Anh Vũ", "http://taigamemoinhat.com/wp-content/uploads/2013/04/girlxinh36.jpg", new Date(), "Lá thư viết vội, có tên rất lạ, chắc là người con thương rất nhiều. Một ngày mẹ thấy, con buồn vu vơ. Nụ dồ vẫn ở trong ngăn bàn. Là đâu đã tàn, hoa đâu đã vàng...", 15, 20));
-        commentList.add(new Comment("12345", "Việt Anh Vũ", "http://taigamemoinhat.com/wp-content/uploads/2013/04/girlxinh36.jpg", new Date(), "Lá thư viết vội, có tên rất lạ, chắc là người con thương rất nhiều. Một ngày mẹ thấy, con buồn vu vơ. Nụ dồ vẫn ở trong ngăn bàn. Là đâu đã tàn, hoa đâu đã vàng...", 15, 20));
-        commentList.add(new Comment("12345", "Việt Anh Vũ", "http://taigamemoinhat.com/wp-content/uploads/2013/04/girlxinh36.jpg", new Date(), "Lá thư viết vội, có tên rất lạ, chắc là người con thương rất nhiều. Một ngày mẹ thấy, con buồn vu vơ. Nụ dồ vẫn ở trong ngăn bàn. Là đâu đã tàn, hoa đâu đã vàng...", 15, 20));
-        commentList.add(new Comment("12345", "Việt Anh Vũ", "http://taigamemoinhat.com/wp-content/uploads/2013/04/girlxinh36.jpg", new Date(), "Lá thư viết vội, có tên rất lạ, chắc là người con thương rất nhiều. Một ngày mẹ thấy, con buồn vu vơ. Nụ dồ vẫn ở trong ngăn bàn. Là đâu đã tàn, hoa đâu đã vàng...", 15, 20));
-        commentList.add(new Comment("12345", "Việt Anh Vũ", "http://taigamemoinhat.com/wp-content/uploads/2013/04/girlxinh36.jpg", new Date(), "Lá thư viết vội, có tên rất lạ, chắc là người con thương rất nhiều. Một ngày mẹ thấy, con buồn vu vơ. Nụ dồ vẫn ở trong ngăn bàn. Là đâu đã tàn, hoa đâu đã vàng...", 15, 20));
-
         commentAdapter = new CommentAdapter(commentList, QuestionDetailActivity.this);
         commentRecyclerView.setHasFixedSize(true);
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(QuestionDetailActivity.this));
@@ -136,29 +163,24 @@ public class QuestionDetailActivity extends CoreActivity {
                                 loge(ja.toString());
                                 for (int i = 0; i < ja.length(); i++) {
                                     JSONObject jo = ja.getJSONObject(i);
-                                    loge(jo.toString());
-//                                    String id = jo.getString("id");
-//                                    String title = jo.getString("title");
-//                                    String content = jo.getString("content");
-//                                    String[] time = null;
-//                                    if (jo.getString("time").equals("null")) {
-//                                        time = jo.getString("time").split(";");
-//                                    }
-//                                    String[] bid_list = null;
-//                                    if (!jo.getString("bid_users_list_id").equals("null")) {
-//                                        bid_list = jo.getString("bid_users_list_id").split(";");
-//                                    }
-//
-//                                    String createdAt = jo.getString("created_at");
-//                                    String phone = jo.getString("phone");
-//                                    String[] tags = jo.getString("tags").split(";");
-//                                    addOffer(new Offer(id, title, tags, content, time, phone, bid_list, createdAt));
+                                    String id = jo.getString("id");
+                                    String photo = jo.getString("photo");
+                                    String content = jo.getString("content");
+                                    String questions_id = jo.getString("questions_id");
+                                    String userId = jo.getString("users_id");
+                                    String upvotes = jo.getString("upvotes");
+                                    String downvotes = jo.getString("downvotes");
+                                    String date = jo.getString("created_at");
+                                    addComment(new Comment(userId, MainActivity.currentAccount.getUsername(), photo, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date),
+                                            content, Integer.parseInt(upvotes), Integer.parseInt(downvotes)));
                                 }
                                 commentRecyclerView.setRefreshing(false);
                             } else {
 
                             }
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
                         removePreviousDialog("Question Detail Fragment");
@@ -179,11 +201,42 @@ public class QuestionDetailActivity extends CoreActivity {
         typing = (EditText) findViewById(R.id.typing);
         send = (ImageView) findViewById(R.id.camera);
         voice = (ImageView) findViewById(R.id.voice);
+        userAvatar = (ImageView) findViewById(R.id.avatar);
+        quesTittle = (TextView) findViewById(R.id.title);
+        nameUser = (TextView) findViewById(R.id.name);
+        time = (TextView) findViewById(R.id.time);
+        content = (TextView) findViewById(R.id.content);
     }
 
     @Override
     public void initModels() {
         initCommentList();
+
+
+//        time = (TextView) findViewById(R.id.time);
+        makeImageRequest(userAvatarLink, new ImageRequestListener() {
+            @Override
+            public void onBefore() {
+                userAvatar.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+            }
+
+            @Override
+            public void onResponse(ImageLoader.ImageContainer paramImageContainer, boolean paramBoolean) {
+                if (paramImageContainer.getBitmap() != null) {
+                    userAvatar.setImageBitmap(Utils.getCircleBitmap(paramImageContainer.getBitmap()));
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loge("Load image failed " + error.getMessage());
+            }
+        });
+        quesTittle.setText(title);
+        nameUser.setText(nameOfUser);
+        content.setText(contentText);
+
+        time.setText(new SimpleDateFormat("HH:mm dd/MM ").format(date));
     }
 
     @Override
@@ -228,11 +281,23 @@ public class QuestionDetailActivity extends CoreActivity {
                 if(isSend) {
                     String s = typing.getText().toString();
                     if(!s.equals("")) {
-                        String myId = "12345";
-                        sendComment(questionId, myId, s);
+                        sendCommentRequest(s, questionId, photo);
                     }
                 } else {
-                    // chup anh
+                    Log.d("TestCamera", "function reached");
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                        File photoFile = null;
+                        try {
+                            photoFile = createImageFile();
+                        } catch (IOException ex) {
+
+                        }
+                        if (photoFile != null) {
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                            startActivityForResult(takePictureIntent, CAMERA_REQUEST);
+                        }
+                    }
                 }
                 break;
             default:
@@ -240,7 +305,61 @@ public class QuestionDetailActivity extends CoreActivity {
         }
     }
 
-    public void sendComment(String questionId, String myId, String msg) {
+    private String mCurrentPhotoPath;
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+    private static final int CAMERA_REQUEST = 1888;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            File imgFile = new File(mCurrentPhotoPath);
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+//                imageView.setImageBitmap(myBitmap);
+            }
+        }
+    }
 
+    public void sendCommentRequest(final String content, final String questionId, final String photo) {
+        final Account a = MainActivity.currentAccount;
+        RequestParams params = new RequestParams();
+        params.put("content", content);
+        params.put("users_id", a.getId());
+        params.put("questions_id", questionId);
+        params.put("photo", photo);
+        showProgressDialog("Comment", "Waiting...");
+        J4FClient.post(Configs.COMMENT, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.getString("status").equals("ok")) {
+                        loge(response.toString());
+                        removePreviousDialog("Comment");
+                        addComment(new Comment(a.getId(), a.getName(), a.getAvatarLink(), new Date(), content, 0, 0));
+                        typing.setText("");
+                    }
+                } catch (JSONException e) {
+                    removePreviousDialog("Comment");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable e) {
+                removePreviousDialog("Comment");
+                Log.e("onFailure", e.toString());
+                Log.e("errorResponse", errorResponse);
+            }
+        });
     }
 }

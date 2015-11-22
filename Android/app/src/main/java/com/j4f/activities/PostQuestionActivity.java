@@ -252,7 +252,6 @@ public class PostQuestionActivity extends CoreActivity implements TokenCompleteT
                             Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
                             try {
                                 if (response.getString("status").equals("ok")) {
-                                    // TODO go to detail page
                                     removePreviousDialog("PostQuestion");
                                     finish();
                                     startActivity(new Intent(PostQuestionActivity.this, QuestionDetailActivity.class));
@@ -264,7 +263,6 @@ public class PostQuestionActivity extends CoreActivity implements TokenCompleteT
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable e) {
-                            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
                             Log.e("onFailure", e.toString());
                             Log.e("errorResponse", errorResponse);
                         }

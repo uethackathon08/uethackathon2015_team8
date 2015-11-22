@@ -172,6 +172,7 @@ public class MainActivity extends CoreActivity
         String id = i.getStringExtra("id");
         String name = i.getStringExtra("username");
         String avatar = i.getStringExtra("avatar");
+        loge(id + " " + name + " " + avatar);
         currentAccount = new Account(id, avatar, name);
     }
 

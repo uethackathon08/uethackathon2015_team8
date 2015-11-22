@@ -21,6 +21,7 @@ import com.j4f.cores.CoreActivity;
 import com.j4f.interfaces.ImageRequestListener;
 import com.j4f.models.Question;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -118,6 +119,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
                 i.putExtra("uName", q.getNameOfUser());
                 i.putExtra("avatar", q.getUserAvatarLink());
                 i.putExtra("title", q.getTitle());
+                i.putExtra("photo", q.getImageLink());
+                i.putExtra("content", q.getContent());
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                i.putExtra("date", formatter.format(q.getTimestamp()));
                 context.startActivity(i);
             }
         });
