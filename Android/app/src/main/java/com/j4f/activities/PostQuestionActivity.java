@@ -247,8 +247,7 @@ public class PostQuestionActivity extends CoreActivity implements TokenCompleteT
                                 if (response.getString("status").equals("ok")) {
                                     removePreviousDialog("PostQuestion");
                                     finish();
-//                                    startActivity(new Intent(PostQuestionActivity.this, MainActivity.class));
-//                                    QuestionsFragment.getInstance().reload();
+//                                    startActivity(new Intent(PostQuestionActivity.this, QuestionDetailActivity.class));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
