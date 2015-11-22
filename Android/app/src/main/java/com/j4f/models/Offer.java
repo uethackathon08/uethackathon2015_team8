@@ -1,7 +1,5 @@
 package com.j4f.models;
 
-import java.util.ArrayList;
-
 /**
  * Created by nvg58 on 11/21/15.
  * Project J4F

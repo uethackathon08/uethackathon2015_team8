@@ -48,12 +48,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.DataOb
             public void onBefore() {
                 holder.icon.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
             }
+
             @Override
             public void onResponse(ImageLoader.ImageContainer paramImageContainer, boolean paramBoolean) {
-                if(paramImageContainer.getBitmap() != null) {
+                if (paramImageContainer.getBitmap() != null) {
                     holder.icon.setImageBitmap(Utils.getCircleBitmap(paramImageContainer.getBitmap()));
                 }
             }
+
             @Override
             public void onErrorResponse(VolleyError error) {
                 context.loge("Load image failed " + error.getMessage());

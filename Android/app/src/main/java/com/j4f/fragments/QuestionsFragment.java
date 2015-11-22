@@ -55,9 +55,11 @@ public class QuestionsFragment extends CoreFragment {
         questionList.add(q);
         questionAdapter.notifyDataSetChanged();
     }
+
     public int mMaxQuestion = -1;
     public int mCurrentQuestionPage = 1;
     public int mLimit = -1;
+
     @TargetApi(Build.VERSION_CODES.M)
     public void initQuestionList() {
         questionList = new ArrayList<Question>();
@@ -90,23 +92,24 @@ public class QuestionsFragment extends CoreFragment {
         });
         getAllQuestion(Configs.QUESTION_PAGE_LIMIT, mCurrentQuestionPage);
     }
+
     public void getAllQuestion(final int limit, final int page) {
         mContext.showProgressDialog("Question Fragment", "Loading questions ...");
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Configs.BASE_URL +
-                Configs.GET_ALL_QUESTIONS +  "?limit=" + limit + "&page=" + page,
+                Configs.GET_ALL_QUESTIONS + "?limit=" + limit + "&page=" + page,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             String status = response.getString("status");
-                            if(status.equals("ok")) {
-                                if(mMaxQuestion == -1) {
+                            if (status.equals("ok")) {
+                                if (mMaxQuestion == -1) {
                                     mMaxQuestion = response.getInt("count");
                                     int d = mMaxQuestion / Configs.CATEGORY_PAGE_LIMIT;
                                     mLimit = mMaxQuestion % Configs.CATEGORY_PAGE_LIMIT == 0 ? d : d + 1;
                                 }
                                 JSONArray ja = response.getJSONArray("data");
-                                for(int i=0; i<ja.length(); i++) {
+                                for (int i = 0; i < ja.length(); i++) {
                                     JSONObject jo = ja.getJSONObject(i);
                                     mContext.loge(jo.toString());
                                     String id = jo.getString("id");
@@ -122,7 +125,8 @@ public class QuestionsFragment extends CoreFragment {
                                     String timestamp = jo.getString("created_at");
 
                                     ArrayList<Category> categoriesList = new ArrayList<>();
-                                    for(String k : tag) categoriesList.add(new Category("ID", k, "Link", 5, 5));
+                                    for (String k : tag)
+                                        categoriesList.add(new Category("ID", k, "Link", 5, 5));
                                     try {
                                         addQuestion(new Question(categoriesList, id, users_id, nameOfUser, avatar,
                                                 title, content, photo, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(timestamp),
@@ -176,6 +180,7 @@ public class QuestionsFragment extends CoreFragment {
     public static final long serialVersionUID = 6036846677812555352L;
     public static MainActivity mActivity;
     public static QuestionsFragment mInstance;
+
     public static QuestionsFragment getInstance(MainActivity activity) {
         if (mInstance == null) {
             mInstance = new QuestionsFragment();
@@ -183,6 +188,7 @@ public class QuestionsFragment extends CoreFragment {
         mActivity = activity;
         return mInstance;
     }
+
     private QuestionsFragment() {
 
     }

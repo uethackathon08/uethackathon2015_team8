@@ -53,9 +53,11 @@ public class OffersFragment extends CoreFragment {
         offersList.add(o);
         offerAdapter.notifyDataSetChanged();
     }
+
     public int mMaxOffer = -1;
     public int mCurrentOfferPage = 1;
     public int mLimit = -1;
+
     @TargetApi(Build.VERSION_CODES.M)
     public void initOffersList() {
         offersList = new ArrayList<Offer>();
@@ -98,6 +100,7 @@ public class OffersFragment extends CoreFragment {
 //        });
         getAllOffers(Configs.OFFER_PAGE_LIMIT, mCurrentOfferPage);
     }
+
     public void getAllOffers(final int limit, final int page) {
         mContext.showProgressDialog("Offer Fragment", "Loading offers ...");
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Configs.BASE_URL +
@@ -107,8 +110,8 @@ public class OffersFragment extends CoreFragment {
                     public void onResponse(JSONObject response) {
                         try {
                             String status = response.getString("status");
-                            if(status.equals("ok")) {
-                                if(mMaxOffer == -1) {
+                            if (status.equals("ok")) {
+                                if (mMaxOffer == -1) {
                                     mMaxOffer = response.getInt("count");
                                     int d = mMaxOffer / Configs.OFFER_PAGE_LIMIT;
                                     mLimit = mMaxOffer % Configs.OFFER_PAGE_LIMIT == 0 ? d : d + 1;

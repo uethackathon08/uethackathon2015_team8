@@ -50,20 +50,20 @@ public class CategoriesFragment extends CoreFragment {
     public void getAllCategory(final int limit, final int page) {
         mContext.showProgressDialog("Category Fragment", "Loading categories ...");
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Configs.BASE_URL +
-                Configs.GET_ALL_CATEGORIES +  "?limit=" + limit + "&page=" + page,
+                Configs.GET_ALL_CATEGORIES + "?limit=" + limit + "&page=" + page,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             String status = response.getString("status");
-                            if(status.equals("ok")) {
-                                if(mMaxCategory == -1) {
+                            if (status.equals("ok")) {
+                                if (mMaxCategory == -1) {
                                     mMaxCategory = response.getInt("count");
                                     int d = mMaxCategory / Configs.CATEGORY_PAGE_LIMIT;
                                     mLimit = mMaxCategory % Configs.CATEGORY_PAGE_LIMIT == 0 ? d : d + 1;
                                 }
                                 JSONArray ja = response.getJSONArray("data");
-                                for(int i=0; i<ja.length(); i++) {
+                                for (int i = 0; i < ja.length(); i++) {
                                     JSONObject jo = ja.getJSONObject(i);
                                     String id = jo.getString("id");
                                     String name = jo.getString("name");
@@ -93,9 +93,11 @@ public class CategoriesFragment extends CoreFragment {
         categoryList.add(c);
         categoryAdapter.notifyDataSetChanged();
     }
+
     public int mMaxCategory = -1;
     public int mCurrentCategoryPage = 1;
     public int mLimit = -1;
+
     @TargetApi(Build.VERSION_CODES.M)
     public void initCategoryList() {
         categoryList = new ArrayList<Category>();
@@ -128,6 +130,7 @@ public class CategoriesFragment extends CoreFragment {
         });
         getAllCategory(Configs.CATEGORY_PAGE_LIMIT, mCurrentCategoryPage);
     }
+
     private int scrollOld = 0;
 
     @Override
@@ -156,6 +159,7 @@ public class CategoriesFragment extends CoreFragment {
     public static final long serialVersionUID = 6036846677812555352L;
     public static MainActivity mActivity;
     public static CategoriesFragment mInstance;
+
     public static CategoriesFragment getInstance(MainActivity activity) {
         if (mInstance == null) {
             mInstance = new CategoriesFragment();

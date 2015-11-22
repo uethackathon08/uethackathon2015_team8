@@ -40,6 +40,7 @@ public class TutorArrayAdapter extends ArrayAdapter<Account> {
     public int getCount() {
         return data.size();
     }
+
     @Override
     public Account getItem(int position) {
         return data.get(position);
@@ -49,6 +50,7 @@ public class TutorArrayAdapter extends ArrayAdapter<Account> {
         this.data.add(model);
         notifyDataSetChanged();
     }
+
     public void removeItem(TimeSlot model) {
         this.data.remove(model);
         notifyDataSetChanged();
@@ -76,7 +78,7 @@ public class TutorArrayAdapter extends ArrayAdapter<Account> {
         }
 
         holder.name.setText(model.getUsername());
-        holder.reputation.setText( (int) (Math.random() * (50 - 1)) + " Tutors • " + "Reputation: " + model.getReputation());
+        holder.reputation.setText((int) (Math.random() * (50 - 1)) + " Tutors • " + "Reputation: " + model.getReputation());
 
         return convertView;
     }

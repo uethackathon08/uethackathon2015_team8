@@ -3,6 +3,7 @@ package com.j4f.utils;
 /**
  * Created by TuanTQ on 11/21/15.
  */
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -39,7 +40,9 @@ public class CustomRequest extends Request<JSONObject> {
     protected Map<String, String> getParams()
             throws com.android.volley.AuthFailureError {
         return params;
-    };
+    }
+
+    ;
 
     @Override
     protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {

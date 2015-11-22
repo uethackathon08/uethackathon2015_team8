@@ -30,6 +30,7 @@ import java.util.ArrayList;
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataObjectHolder> implements View.OnClickListener {
     private ArrayList<Question> dataSet;
     private CoreActivity context;
+
     public QuestionAdapter(ArrayList<Question> myDataSet, CoreActivity context) {
         this.context = context;
         this.dataSet = myDataSet;
@@ -73,13 +74,15 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
             public void onBefore() {
                 holder.avatar.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
             }
+
             @Override
             public void onResponse(ImageLoader.ImageContainer paramImageContainer, boolean paramBoolean) {
                 Bitmap b = paramImageContainer.getBitmap();
-                if(b != null) {
+                if (b != null) {
                     holder.avatar.setImageBitmap(Utils.getCircleBitmap(paramImageContainer.getBitmap()));
                 }
             }
+
             @Override
             public void onErrorResponse(VolleyError error) {
                 context.loge("Load image failed " + error.getMessage());
@@ -89,7 +92,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
         holder.voteup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.isVoteup) {
+                if (holder.isVoteup) {
                     holder.voteup.setImageDrawable(context.getResources().getDrawable(R.mipmap.voteup_disable));
                     holder.isVoteup = false;
                 } else {
@@ -101,7 +104,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
         holder.votedown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.isvotedown) {
+                if (holder.isvotedown) {
                     holder.votedown.setImageDrawable(context.getResources().getDrawable(R.mipmap.votedown_disable));
                     holder.isvotedown = false;
                 } else {
@@ -131,7 +134,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
         holder.bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.isBookmark) {
+                if (holder.isBookmark) {
                     holder.bookmark.setImageDrawable(context.getResources().getDrawable(R.mipmap.bookmark_disable));
                     holder.isBookmark = false;
                 } else {
@@ -171,9 +174,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
     public void clearData() {
         dataSet.clear();
     }
+
     public Question getItem(int index) {
         return dataSet.get(index);
     }
+
     @Override
     public int getItemCount() {
         return dataSet.size();
@@ -181,7 +186,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.avatar:
                 break;
             case R.id.image:
@@ -203,13 +208,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.DataOb
         }
     }
 
-    public static class DataObjectHolder extends RecyclerView.ViewHolder{
+    public static class DataObjectHolder extends RecyclerView.ViewHolder {
         public ImageView image, avatar, voteup, votedown, comment, share, more, bookmark;
         public TextView title, content, name, time;
         public LinearLayout tags_list;
         public boolean isVoteup = false;
         public boolean isvotedown = false;
         public boolean isBookmark = false;
+
         public DataObjectHolder(View itemView, int type) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image);

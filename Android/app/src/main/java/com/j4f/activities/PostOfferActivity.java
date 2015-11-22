@@ -34,11 +34,11 @@ import com.j4f.application.MyApplication;
 import com.j4f.cores.CoreActivity;
 import com.j4f.models.TimeSlot;
 import com.j4f.utils.Constant;
-import com.tokenautocomplete.ContactsCompletionView;
-import com.tokenautocomplete.Tag;
 import com.j4f.utils.CustomRequest;
 import com.j4f.utils.TimeUtils;
+import com.tokenautocomplete.ContactsCompletionView;
 import com.tokenautocomplete.FilteredArrayAdapter;
+import com.tokenautocomplete.Tag;
 import com.tokenautocomplete.TokenCompleteTextView;
 
 import org.json.JSONException;
@@ -118,15 +118,15 @@ public class PostOfferActivity extends CoreActivity implements TokenCompleteText
             public View getView(int position, View convertView, ViewGroup parent) {
                 if (convertView == null) {
 
-                    LayoutInflater l = (LayoutInflater)getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                    LayoutInflater l = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
                     convertView = l.inflate(R.layout.item_tag, parent, false);
                 }
 
                 Tag p = getItem(position);
-                ((TextView)convertView.findViewById(R.id.name)).setText(p.getName());
+                ((TextView) convertView.findViewById(R.id.name)).setText(p.getName());
                 String uri = "@drawable/tag_icon_" + String.valueOf(p.getId());
                 int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-                ((ImageView)convertView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(imageResource));
+                ((ImageView) convertView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(imageResource));
 
                 return convertView;
             }
@@ -138,7 +138,7 @@ public class PostOfferActivity extends CoreActivity implements TokenCompleteText
             }
         };
 
-        mCompletionView = (ContactsCompletionView)findViewById(R.id.searchView);
+        mCompletionView = (ContactsCompletionView) findViewById(R.id.searchView);
         mCompletionView.setAdapter(mTagAdapter);
         mCompletionView.setTokenListener(this);
         mCompletionView.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select);
@@ -376,7 +376,7 @@ public class PostOfferActivity extends CoreActivity implements TokenCompleteText
 
     @Override
     public void onTokenAdded(Object token) {
-        mOfferedTags.add(((Tag)token).getName());
+        mOfferedTags.add(((Tag) token).getName());
     }
 
     @Override

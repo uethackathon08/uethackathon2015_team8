@@ -102,15 +102,15 @@ public class PostQuestionActivity extends CoreActivity implements TokenCompleteT
             public View getView(int position, View convertView, ViewGroup parent) {
                 if (convertView == null) {
 
-                    LayoutInflater l = (LayoutInflater)getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                    LayoutInflater l = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
                     convertView = l.inflate(R.layout.item_tag, parent, false);
                 }
 
                 Tag p = getItem(position);
-                ((TextView)convertView.findViewById(R.id.name)).setText(p.getName());
+                ((TextView) convertView.findViewById(R.id.name)).setText(p.getName());
                 String uri = "@drawable/tag_icon_" + String.valueOf(p.getId());
                 int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-                ((ImageView)convertView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(imageResource));
+                ((ImageView) convertView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(imageResource));
 
                 return convertView;
             }
@@ -122,7 +122,7 @@ public class PostQuestionActivity extends CoreActivity implements TokenCompleteT
             }
         };
 
-        mCompletionView = (ContactsCompletionView)findViewById(R.id.searchView);
+        mCompletionView = (ContactsCompletionView) findViewById(R.id.searchView);
         mCompletionView.setAdapter(mTagAdapter);
         mCompletionView.setTokenListener(this);
         mCompletionView.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select);
@@ -171,9 +171,6 @@ public class PostQuestionActivity extends CoreActivity implements TokenCompleteT
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
@@ -197,10 +194,6 @@ public class PostQuestionActivity extends CoreActivity implements TokenCompleteT
                 }
                 break;
         }
-//        //noinspection SimplifiableIfStatement
-//        if (id == android.R.id.home) {
-//
-//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -274,7 +267,7 @@ public class PostQuestionActivity extends CoreActivity implements TokenCompleteT
 
     @Override
     public void onTokenAdded(Object token) {
-        mOfferedTags.add(((Tag)token).getName());
+        mOfferedTags.add(((Tag) token).getName());
     }
 
     @Override

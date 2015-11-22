@@ -13,8 +13,9 @@ import com.j4f.R;
 
 /**
  * Sample token completion view for basic contact info
- *
+ * <p/>
  * Created on 9/12/13.
+ *
  * @author mgod
  */
 public class ContactsCompletionView extends TokenCompleteTextView<Tag> {
@@ -36,7 +37,7 @@ public class ContactsCompletionView extends TokenCompleteTextView<Tag> {
 
         LayoutInflater l = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         LinearLayout view = (LinearLayout) l.inflate(R.layout.tag_token, (ViewGroup) ContactsCompletionView.this.getParent(), false);
-        ((TextView)view.findViewById(R.id.name)).setText(tag.getName());
+        ((TextView) view.findViewById(R.id.name)).setText(tag.getName());
 
         return view;
     }

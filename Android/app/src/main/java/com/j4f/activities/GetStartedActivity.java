@@ -1,4 +1,5 @@
 package com.j4f.activities;
+
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
@@ -17,17 +18,18 @@ import com.j4f.customizes.MyAnimations;
 
 public class GetStartedActivity extends CoreActivity {
     private Button signIn, signUp;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_started);
 
-        Button btn_signin = (Button)findViewById(R.id.btn_signin);
-        Button btn_signup = (Button)findViewById(R.id.btn_signup);
+        Button btn_signin = (Button) findViewById(R.id.btn_signin);
+        Button btn_signup = (Button) findViewById(R.id.btn_signup);
         btn_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(),SigninActivity.class);
+                Intent intent = new Intent(getBaseContext(), SigninActivity.class);
                 startActivity(intent);
             }
         });
@@ -57,11 +59,11 @@ public class GetStartedActivity extends CoreActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
     }
-    
+
     @Override
     public void initViews() {
-        signIn = (Button)findViewById(R.id.btn_signin);
-        signUp = (Button)findViewById(R.id.btn_signup);
+        signIn = (Button) findViewById(R.id.btn_signin);
+        signUp = (Button) findViewById(R.id.btn_signup);
     }
 
     @Override
@@ -101,7 +103,7 @@ public class GetStartedActivity extends CoreActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_signin:
-                startActivity(new Intent(getBaseContext(),SigninActivity.class));
+                startActivity(new Intent(getBaseContext(), SigninActivity.class));
                 break;
             case R.id.btn_signup:
                 startActivity(new Intent(getBaseContext(), SignupActivity.class));

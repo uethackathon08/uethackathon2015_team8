@@ -109,9 +109,11 @@ public class QuestionDetailActivity extends CoreActivity {
         commentList.add(o);
         commentAdapter.notifyDataSetChanged();
     }
+
     public int mMaxComment = -1;
     public int mCurrentCommentPage = 1;
     public int mLimit = -1;
+
     @TargetApi(Build.VERSION_CODES.M)
     public void initCommentList() {
         commentList = new ArrayList<Comment>();
@@ -144,6 +146,7 @@ public class QuestionDetailActivity extends CoreActivity {
         });
         getALlComment(questionId, Configs.COMMENT_PAGE_LIMIT, mCurrentCommentPage);
     }
+
     public void getALlComment(final String qId, final int limited, final int page) {
         showProgressDialog("Question Detail Fragment", "Loading offers ...");
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Configs.BASE_URL +
@@ -153,8 +156,8 @@ public class QuestionDetailActivity extends CoreActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             String status = response.getString("status");
-                            if(status.equals("ok")) {
-                                if(mMaxComment == -1) {
+                            if (status.equals("ok")) {
+                                if (mMaxComment == -1) {
                                     mMaxComment = response.getInt("count");
                                     int d = mMaxComment / Configs.COMMENT_PAGE_LIMIT;
                                     mLimit = mMaxComment % Configs.COMMENT_PAGE_LIMIT == 0 ? d : d + 1;
@@ -214,8 +217,6 @@ public class QuestionDetailActivity extends CoreActivity {
     public void initModels() {
         initCommentList();
 
-
-//        time = (TextView) findViewById(R.id.time);
         makeImageRequest(userAvatarLink, new ImageRequestListener() {
             @Override
             public void onBefore() {
@@ -280,9 +281,9 @@ public class QuestionDetailActivity extends CoreActivity {
             case R.id.voice:
                 break;
             case R.id.camera:
-                if(isSend) {
+                if (isSend) {
                     String s = typing.getText().toString();
-                    if(!s.equals("")) {
+                    if (!s.equals("")) {
                         sendCommentRequest(s, questionId, photo);
                     }
                 } else {
@@ -308,6 +309,7 @@ public class QuestionDetailActivity extends CoreActivity {
     }
 
     private String mCurrentPhotoPath;
+
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -321,13 +323,14 @@ public class QuestionDetailActivity extends CoreActivity {
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
     private static final int CAMERA_REQUEST = 1888;
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             File imgFile = new File(mCurrentPhotoPath);
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//                imageView.setImageBitmap(myBitmap);
             }
         }
     }

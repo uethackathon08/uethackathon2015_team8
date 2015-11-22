@@ -10,58 +10,61 @@ import java.io.Serializable;
 
 public abstract class CoreFragment extends Fragment implements OnClickListener, Serializable {
 
-	private static final long serialVersionUID = 7080889824192321168L;
-	protected FragmentManager mFragmentManager;
-	protected CoreActivity mContext;
+    private static final long serialVersionUID = 7080889824192321168L;
+    protected FragmentManager mFragmentManager;
+    protected CoreActivity mContext;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		mFragmentManager = getFragmentManager();
-		mContext = (CoreActivity) getActivity();
-		
-	}
-	
-	@Override
-	public void onStart() {
-		super.onStart();
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mFragmentManager = getFragmentManager();
+        mContext = (CoreActivity) getActivity();
 
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
+    }
 
-	@Override
-	public void onPause() {
-		super.onPause();
-	}
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
-	@Override
-	public void onStop() {
-		super.onStop();
-	}
-	
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-	}
-	
-	@Override
-	public void onClick(View view) {
-		
-	}
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
-	public void finishFragment() {
-		try {
-			mFragmentManager.popBackStack();
-		} catch (Exception e) {
-		//	Log.e(e.getMessage());
-		}
-	}
-	
-	protected abstract void initModels();
-	protected abstract void initViews(View view);
-	protected abstract void initListener();
-	protected abstract void initAnimations();
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    public void finishFragment() {
+        try {
+            mFragmentManager.popBackStack();
+        } catch (Exception e) {
+            //	Log.e(e.getMessage());
+        }
+    }
+
+    protected abstract void initModels();
+
+    protected abstract void initViews(View view);
+
+    protected abstract void initListener();
+
+    protected abstract void initAnimations();
 }

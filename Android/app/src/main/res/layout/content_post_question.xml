@@ -53,7 +53,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="Tags"
                 android:textColor="@color/label"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <com.tokenautocomplete.ContactsCompletionView
                 android:id="@+id/searchView"

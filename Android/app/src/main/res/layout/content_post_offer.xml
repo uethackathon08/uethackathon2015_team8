@@ -23,7 +23,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:src="@color/background"/>
+                android:src="@color/background" />
 
             <EditText
                 android:id="@+id/title"
@@ -36,7 +36,7 @@
                 android:background="@android:color/transparent"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"/>
+                android:layout_marginRight="25dp" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="40dp"/>
+                android:layout_marginBottom="40dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="Tags"
                 android:textColor="@color/label"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <com.tokenautocomplete.ContactsCompletionView
                 android:id="@+id/searchView"
@@ -91,7 +91,7 @@
                     android:layout_centerVertical="true"
                     android:text="Add time slots"
                     android:textColor="@color/label"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <Switch
                     android:id="@+id/add_time"
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
@@ -129,7 +129,7 @@
                     android:layout_alignParentTop="true"
                     android:text="Add more..."
                     android:textSize="16sp"
-                    android:textColor="@color/hint"/>
+                    android:textColor="@color/hint" />
             </RelativeLayout>
 
             <TextView
@@ -140,7 +140,7 @@
                 android:layout_marginRight="25dp"
                 android:text="Contact"
                 android:textColor="@color/label"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/contact"
@@ -154,7 +154,7 @@
                 android:inputType="phone"
                 android:textSize="16sp"
                 android:textColor="@color/black"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -164,7 +164,7 @@
                 android:layout_marginRight="25dp"
                 android:text="Description"
                 android:textColor="@color/label"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/description"
@@ -177,13 +177,13 @@
                 android:textColorHint="@color/hint"
                 android:textSize="16sp"
                 android:textColor="@color/black"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:src="@color/background"/>
+                android:src="@color/background" />
 
         </LinearLayout>
 

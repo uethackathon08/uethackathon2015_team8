@@ -95,55 +95,6 @@ public class ViewOfferActivity extends CoreActivity {
         initAnimations();
     }
 
-//    private void loadData(String offerID) {
-//        String url = Constant.BASE_URL + "offer/new";
-//        Map<String, String> params = new HashMap<>();
-//        String tags = "";
-//        for (String tag : mOfferedTags) {
-//            tags += tag + ";";
-//        }
-//        params.put("tags", tags);
-//        params.put("title", title);
-//        params.put("content", content);
-//        params.put("users_id", MyApplication.USER_ID);
-//        if (contact != null) params.put("phone", contact);
-//
-//        if (mTimeSlotList.size() > 0) {
-//            String time = "";
-//            for (TimeSlot timeSlot : mTimeSlotList) {
-//                time += timeSlot.getDatetime().getTimeInMillis() + ";";
-//            }
-//            params.put("time", time);
-//        }
-//
-//        CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                removePreviousDialog("PostOffer Fragment");
-//                String offerID = "";
-//                try {
-//                    offerID = response.get("data").toString();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                finish();
-//
-//                Intent intent = new Intent(getBaseContext(), ViewOfferActivity.class);
-//                intent.putExtra("offerID", offerID);
-//                startActivity(intent);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                alert("Error when posting your offer");
-//                removePreviousDialog("PostOffer Fragment");
-//                showToastLong("Error");
-//            }
-//        });
-//
-//        MyApplication.getInstance().addToRequestQueue(jsObjRequest);
-//        showProgressDialog("PostOffer Fragment", "Posting...");
-//    }
 
     @Override
     public void initViews() {
@@ -165,14 +116,7 @@ public class ViewOfferActivity extends CoreActivity {
     public void initAnimations() {
 
     }
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_view_offer, menu);
-//        return true;
-//    }
+    
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -280,7 +224,7 @@ public class ViewOfferActivity extends CoreActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = null;
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 1:

@@ -187,13 +187,16 @@ public abstract class CoreActivity extends AppCompatActivity implements Serializ
     }
 
     private android.support.v4.app.FragmentManager mFragmentManager = getSupportFragmentManager();
+
     public void removePreviousDialog(String tag) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
         Fragment prev = mFragmentManager.findFragmentByTag(tag);
         if (prev != null) ft.remove(prev);
         ft.commit();
     }
+
     private DialogFragment mDialog;
+
     public DialogFragment showProgressDialog(final String tag, final String msg) {
         runOnUiThread(new Runnable() {
             @Override

@@ -81,52 +81,6 @@ public class SigninActivity extends CoreActivity {
 
     }
 
-//    public void login(final String username, final String password ) {
-//        showProgressDialog("Login", "Logging in ...");
-//        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.POST, Configs.BASE_URL + Configs.LOGIN,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        loge(response.toString());
-//                        String status = null;
-//                        try {
-//                            status = response.getString("status");
-//                            if(status.equals("ok")) {
-//                                JSONObject data = response.getJSONObject("data");
-//                                String id = data.getString("id");
-//                                String username = data.getString("username");
-//                                String avatar = data.getString("avatar");
-//                                Intent intent = new Intent(SigninActivity.this, MainActivity.class);
-//                                intent.putExtra("id", id);
-//                                intent.putExtra("username", username);
-//                                intent.putExtra("avatar", avatar);
-//                                startActivity(intent);
-//                                removePreviousDialog("Login");
-//                            } else {
-//
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                loge(error.getMessage());
-//                removePreviousDialog("Login");
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("email", username);
-//                params.put("password", password);
-//                return params;
-//            }
-//        };
-//        MyApplication.getInstance().addToRequestQueue(jsonObjRequest, Configs.TAG_JSONOBJ_REQUEST);
-//    }
-
     public void login(String email, String pass) {
         RequestParams params = new RequestParams();
         params.put("email", email);
@@ -155,6 +109,7 @@ public class SigninActivity extends CoreActivity {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable e) {
                 removePreviousDialog("Login");
@@ -165,7 +120,7 @@ public class SigninActivity extends CoreActivity {
     }
 
     public boolean validate(String email, String password) {
-        if(!email.equals("") && !password.equals("")) {
+        if (!email.equals("") && !password.equals("")) {
             return true;
         }
         return false;
@@ -177,7 +132,7 @@ public class SigninActivity extends CoreActivity {
             case R.id.confirm_sign_in_button:
                 String email = username.getText().toString();
                 String pass = password.getText().toString();
-                if(validate(email, pass)) {
+                if (validate(email, pass)) {
                     login(email, pass);
                 } else {
                     Snackbar.make(v, "Opps, some fields are empty !", Snackbar.LENGTH_LONG).show();

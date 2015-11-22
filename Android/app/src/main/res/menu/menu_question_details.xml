@@ -6,7 +6,7 @@
         android:title="Capture"
         android:id="@+id/action_image"
         android:icon="@mipmap/image_attach"
-        app:showAsAction="always" >
+        app:showAsAction="always">
 
     </item>
 </menu>

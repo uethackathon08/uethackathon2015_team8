@@ -60,12 +60,14 @@ public class SignupActivity extends CoreActivity {
     public void initAnimations() {
 
     }
+
     public boolean validate(String fullname, String email, String pass) {
-        if(!fullname.equals("") && !email.equals("") && !pass.equals("")) {
+        if (!fullname.equals("") && !email.equals("") && !pass.equals("")) {
             return true;
         }
         return false;
     }
+
     public void register(final String name, final String email, final String pass) {
         loge(name + " " + email + " " + pass);
         RequestParams params = new RequestParams();
@@ -94,6 +96,7 @@ public class SignupActivity extends CoreActivity {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable e) {
                 removePreviousDialog("Signup");
@@ -105,12 +108,12 @@ public class SignupActivity extends CoreActivity {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.email_sign_in_button:
                 String name = fullname.getText().toString();
                 String mail = email.getText().toString();
                 String pass = password.getText().toString();
-                if(validate(name, mail, pass)) {
+                if (validate(name, mail, pass)) {
                     register(name, mail, pass);
                 } else {
                     Snackbar.make(v, "Opps, some fields are empty !", Snackbar.LENGTH_LONG).show();

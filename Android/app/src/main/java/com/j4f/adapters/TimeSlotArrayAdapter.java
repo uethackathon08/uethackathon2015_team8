@@ -37,6 +37,7 @@ public class TimeSlotArrayAdapter extends ArrayAdapter<TimeSlot> {
     public int getCount() {
         return data.size();
     }
+
     @Override
     public TimeSlot getItem(int position) {
         return data.get(position);
@@ -46,6 +47,7 @@ public class TimeSlotArrayAdapter extends ArrayAdapter<TimeSlot> {
         this.data.add(model);
         notifyDataSetChanged();
     }
+
     public void removeItem(TimeSlot model) {
         this.data.remove(model);
         notifyDataSetChanged();

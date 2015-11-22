@@ -53,12 +53,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.DataObje
             public void onBefore() {
                 holder.avatar.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
             }
+
             @Override
             public void onResponse(ImageLoader.ImageContainer paramImageContainer, boolean paramBoolean) {
-                if(paramImageContainer.getBitmap() != null) {
+                if (paramImageContainer.getBitmap() != null) {
                     holder.avatar.setImageBitmap(Utils.getCircleBitmap(paramImageContainer.getBitmap()));
                 }
             }
+
             @Override
             public void onErrorResponse(VolleyError error) {
                 context.loge("Load image failed " + error.getMessage());
@@ -99,6 +101,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.DataObje
     public static class DataObjectHolder extends RecyclerView.ViewHolder {
         public ImageView avatar, voteUpIcon, voteDownIcon;
         public TextView name, content, voteUp, voteDown, time;
+
         public DataObjectHolder(View itemView, int type) {
             super(itemView);
             avatar = (ImageView) itemView.findViewById(R.id.comment_avatar);

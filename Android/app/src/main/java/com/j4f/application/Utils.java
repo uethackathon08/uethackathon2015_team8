@@ -29,6 +29,7 @@ public class Utils {
             throw new RuntimeException(e);
         }
     }
+
     public static Bitmap getCircleBitmap(Bitmap bm) {
         int sice = Math.min((bm.getWidth()), (bm.getHeight()));
         Bitmap bitmap = ThumbnailUtils.extractThumbnail(bm, sice, sice);

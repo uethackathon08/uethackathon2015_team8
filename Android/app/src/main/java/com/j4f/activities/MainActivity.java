@@ -18,11 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
 import com.j4f.R;
 import com.j4f.cores.CoreActivity;
 import com.j4f.fragments.CategoriesFragment;
-import com.j4f.fragments.QuestionsFragment;
 import com.j4f.fragments.OffersFragment;
+import com.j4f.fragments.QuestionsFragment;
 import com.j4f.models.Account;
 
 import it.neokree.materialtabs.MaterialTab;
@@ -30,7 +31,7 @@ import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
 public class MainActivity extends CoreActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MaterialTabListener{
+        implements NavigationView.OnNavigationItemSelectedListener, MaterialTabListener {
 
     public MaterialTabHost tabHost;
     public ViewPager pager;
@@ -80,7 +81,6 @@ public class MainActivity extends CoreActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, PostOfferActivity.class));
                 animateFAB();
             }
         });
@@ -156,6 +156,7 @@ public class MainActivity extends CoreActivity
         getSupportActionBar().hide();
         fab.hide();
     }
+
     public void showActionbarAndFloatingButton() {
         getSupportActionBar().show();
         fab.show();
@@ -259,7 +260,6 @@ public class MainActivity extends CoreActivity
             Log.d("fabMenu", "open");
         }
     }
-
 
 
 }

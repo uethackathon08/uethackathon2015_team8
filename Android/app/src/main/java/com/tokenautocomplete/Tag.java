@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 /**
  * Simple container object for contact data
- *
+ * <p/>
  * Created by mgod on 9/12/13.
+ *
  * @author mgod
  */
 public class Tag implements Serializable {
@@ -34,5 +35,7 @@ public class Tag implements Serializable {
     }
 
     @Override
-    public String toString() { return name; }
+    public String toString() {
+        return name;
+    }
 }
