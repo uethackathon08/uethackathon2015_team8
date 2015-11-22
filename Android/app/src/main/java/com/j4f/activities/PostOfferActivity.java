@@ -258,19 +258,19 @@ public class PostOfferActivity extends CoreActivity implements TokenCompleteText
                 CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        removePreviousDialog();
+                        removePreviousDialog("PostOffer Fragment");
                         finish();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        removePreviousDialog();
+                        removePreviousDialog("PostOffer Fragment");
                         showToastLong("Error");
                     }
                 });
 
                 MyApplication.getInstance().addToRequestQueue(jsObjRequest);
-                showProgressDialog("Posting...");
+                showProgressDialog("PostOffer Fragment", "Posting...");
                 break;
             default:
                 break;
@@ -280,7 +280,7 @@ public class PostOfferActivity extends CoreActivity implements TokenCompleteText
     private void alert(final String title) {
         AlertDialog alertDialog = new AlertDialog.Builder(PostOfferActivity.this).create();
         alertDialog.setTitle(title);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();

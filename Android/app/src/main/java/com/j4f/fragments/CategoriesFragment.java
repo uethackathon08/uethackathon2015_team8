@@ -48,7 +48,7 @@ public class CategoriesFragment extends CoreFragment {
     }
 
     public void getAllCategory(final int limit, final int page) {
-        mContext.showProgressDialog("Loading categories ...");
+        mContext.showProgressDialog("Category Fragment", "Loading categories ...");
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Configs.BASE_URL +
                 Configs.GET_ALL_CATEGORIES +  "?limit=" + limit + "&page=" + page,
                 new Response.Listener<JSONObject>() {
@@ -77,13 +77,13 @@ public class CategoriesFragment extends CoreFragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        mContext.removePreviousDialog();
+                        mContext.removePreviousDialog("Category Fragment");
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mContext.loge(error.getMessage());
-                mContext.removePreviousDialog();
+                mContext.removePreviousDialog("Category Fragment");
             }
         });
         MyApplication.getInstance().addToRequestQueue(jsonObjRequest, Configs.TAG_JSONOBJ_REQUEST);

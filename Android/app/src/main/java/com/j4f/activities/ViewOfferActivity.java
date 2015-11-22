@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.j4f.R;
 import com.j4f.adapters.TutorArrayAdapter;
@@ -210,6 +212,20 @@ public class ViewOfferActivity extends CoreActivity {
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 1:
                     rootView = inflater.inflate(R.layout.fragment_view_offer_details, container, false);
+                    LinearLayout tagsLayout = (LinearLayout) rootView.findViewById(R.id.tags_list);
+                    LinearLayout.LayoutParams lp = new
+                            LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                    List<String> tags = new ArrayList<>();
+                    tags.add("Tag 1");
+                    tags.add("Tag 2");
+                    for (String tag : tags) {
+                        TextView tv = (TextView) inflater.inflate(R.layout.textview_for_tag, null);
+                        lp.setMargins(0, 0, 16, 0);
+                        tv.setLayoutParams(lp);
+                        tv.setText(tag);
+                        tagsLayout.addView(tv);
+                    }
 
                     break;
                 case 2:

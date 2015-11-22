@@ -90,7 +90,7 @@ public class OffersFragment extends CoreFragment {
         getAllOffers(Configs.OFFER_PAGE_LIMIT, mCurrentOfferPage);
     }
     public void getAllOffers(final int limit, final int page) {
-        mContext.showProgressDialog("Loading offers ...");
+        mContext.showProgressDialog("Offer Fragment", "Loading offers ...");
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Configs.BASE_URL +
                 Configs.GET_ALL_OFFERS + "?limit=" + limit + "&page=" + page,
                 new Response.Listener<JSONObject>() {
@@ -131,13 +131,13 @@ public class OffersFragment extends CoreFragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        mContext.removePreviousDialog();
+                        mContext.removePreviousDialog("Offer Fragment");
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mContext.loge(error.getMessage());
-                mContext.removePreviousDialog();
+                mContext.removePreviousDialog("Offer Fragment");
             }
         });
         MyApplication.getInstance().addToRequestQueue(jsonObjRequest, Configs.TAG_JSONOBJ_REQUEST);
