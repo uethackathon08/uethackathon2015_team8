@@ -1,5 +1,6 @@
 package com.j4f.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,12 +10,16 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.j4f.R;
@@ -23,6 +28,10 @@ import com.j4f.cores.CoreActivity;
 import com.j4f.network.J4FClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.tokenautocomplete.ContactsCompletionView;
+import com.tokenautocomplete.FilteredArrayAdapter;
+import com.tokenautocomplete.Tag;
+import com.tokenautocomplete.TokenCompleteTextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,11 +40,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class PostQuestionActivity extends CoreActivity {
+public class PostQuestionActivity extends CoreActivity implements TokenCompleteTextView.TokenListener {
 
     private EditText mTitleText;
     private EditText mDescriptionText;
@@ -43,6 +54,11 @@ public class PostQuestionActivity extends CoreActivity {
     private Button mPostQuestionButton;
     private ImageView imageView;
     private String mCurrentPhotoPath;
+
+    private ContactsCompletionView mCompletionView;
+    private Tag[] mTags;
+    private ArrayAdapter<Tag> mTagAdapter;
+    private List<String> mOfferedTags;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,10 +74,58 @@ public class PostQuestionActivity extends CoreActivity {
         mDescriptionText = (EditText) findViewById(R.id.description);
         mPostQuestionButton = (Button) findViewById(R.id.post_button);
         imageView = (ImageView) findViewById(R.id.my_image);
+
+        mOfferedTags = new ArrayList<>();
+
         initViews();
         initModels();
         initListeners();
         initAnimations();
+
+        mTags = new Tag[]{
+                new Tag(1, "Business"),
+                new Tag(2, "Data Entry & Admin"),
+                new Tag(3, "Design, Media & Architecture"),
+                new Tag(4, "Engineering and Science"),
+                new Tag(5, "Local Jobs & Service"),
+                new Tag(6, "Sales & Marketing"),
+                new Tag(7, "Mobile Phones & Computing"),
+                new Tag(8, "Others"),
+                new Tag(9, "Product Sourcing & Manufacturing"),
+                new Tag(10, "Translation & Languages"),
+                new Tag(11, "Websites, IT & Software"),
+                new Tag(12, "Writing & Content")
+        };
+
+        mTagAdapter = new FilteredArrayAdapter<Tag>(this, R.layout.item_tag, mTags) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+
+                    LayoutInflater l = (LayoutInflater)getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                    convertView = l.inflate(R.layout.item_tag, parent, false);
+                }
+
+                Tag p = getItem(position);
+                ((TextView)convertView.findViewById(R.id.name)).setText(p.getName());
+                String uri = "@drawable/tag_icon_" + String.valueOf(p.getId());
+                int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                ((ImageView)convertView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(imageResource));
+
+                return convertView;
+            }
+
+            @Override
+            protected boolean keepObject(Tag tag, String mask) {
+                mask = mask.toLowerCase();
+                return (tag.getName().toLowerCase().startsWith(mask) && !mOfferedTags.contains(tag.getName()));
+            }
+        };
+
+        mCompletionView = (ContactsCompletionView)findViewById(R.id.searchView);
+        mCompletionView.setAdapter(mTagAdapter);
+        mCompletionView.setTokenListener(this);
+        mCompletionView.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select);
     }
 
 
@@ -158,40 +222,16 @@ public class PostQuestionActivity extends CoreActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.post_button:
-//                String url = BASE_URL + "question/new";
-//                Map<String, String> params = new HashMap<>();
-//                params.put("tags", "Thật là vui");
-//                params.put("title", "Vui Vui Vui : Đại ca thống");
-//                params.put("content", "Ha ha ha");
-//                params.put("users_id", MyApplication.USER_ID);
-//                File imgFile = new File(mCurrentPhotoPath);
-//                Bitmap bm = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                bm.compress(Bitmap.CompressFormat.JPEG, 50, baos); //bm is the bitmap object
-//                byte[] b = baos.toByteArray();
-//                String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-//                params.put("photo",encodedImage);
-//                Log.d("Hello world",encodedImage);
-//                CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        showToastLong(response.toString());
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        showToastLong("Error");
-//                    }
-//                });
-//
-//                MyApplication.getInstance().addToRequestQueue(jsObjRequest);
-
-                if (mTitleText.getText().toString().isEmpty() || mDescriptionText.getText().toString().isEmpty()) {
+                if (mTitleText.getText().toString().isEmpty() || mDescriptionText.getText().toString().isEmpty()
+                        || mOfferedTags.size() < 1) {
                     Toast.makeText(this, "Please input title and description!", Toast.LENGTH_SHORT).show();
                 } else {
-
                     RequestParams params = new RequestParams();
-                    params.put("tags", "Thật là vui");
+                    String tags = "";
+                    for (String tag : mOfferedTags) {
+                        tags += tag + ";";
+                    }
+                    params.put("tags", tags);
                     params.put("title", mTitleText.getText().toString());
                     params.put("content", mDescriptionText.getText().toString());
                     params.put("users_id", MyApplication.USER_ID);
@@ -203,6 +243,8 @@ public class PostQuestionActivity extends CoreActivity {
                         }
                     }
 
+                    showProgressDialog("PostQuestion", "Posting...");
+
                     String url = "question/new";
                     J4FClient.post(url, params, new JsonHttpResponseHandler() {
                         @Override
@@ -211,6 +253,9 @@ public class PostQuestionActivity extends CoreActivity {
                             try {
                                 if (response.getString("status").equals("ok")) {
                                     // TODO go to detail page
+                                    removePreviousDialog("PostQuestion");
+                                    finish();
+                                    startActivity(new Intent(PostQuestionActivity.this, QuestionDetailActivity.class));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -227,6 +272,16 @@ public class PostQuestionActivity extends CoreActivity {
                     break;
                 }
         }
+    }
+
+    @Override
+    public void onTokenAdded(Object token) {
+        mOfferedTags.add(((Tag)token).getName());
+    }
+
+    @Override
+    public void onTokenRemoved(Object token) {
+
     }
 }
 

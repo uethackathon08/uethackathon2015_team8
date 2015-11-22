@@ -87,13 +87,13 @@ public class MainActivity extends CoreActivity
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PostOfferActivity.class));
+                startActivity(new Intent(MainActivity.this, PostQuestionActivity.class));
             }
         });
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PostQuestionActivity.class));
+                startActivity(new Intent(MainActivity.this, PostOfferActivity.class));
             }
         });
 

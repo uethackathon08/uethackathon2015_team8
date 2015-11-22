@@ -8,8 +8,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="60dp"
         android:layout_marginLeft="@dimen/scrollview_margin"
         android:layout_marginRight="@dimen/scrollview_margin"
         android:background="@color/white"
@@ -19,7 +17,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="50dp"
             android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:src="@color/background"/>
 
             <TextView
                 android:id="@+id/title"
@@ -150,6 +154,12 @@
                 android:text="natus error sit voluptatem accusantium doloremque laudantiuuasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginTop="20dp"
+                android:src="@color/background"/>
         </LinearLayout>
     </ScrollView>
 

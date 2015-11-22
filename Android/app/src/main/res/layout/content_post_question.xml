@@ -41,8 +41,36 @@
                 android:layout_marginBottom="0dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/background" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:text="Tags"
+                android:textColor="@color/label"
+                android:textSize="14sp"/>
+
+            <com.tokenautocomplete.ContactsCompletionView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:hint="Add tags to your question"
+                android:textColorHint="@color/hint"
+                android:imeOptions="actionDone"
+                android:textColor="@color/label"
+                android:textSize="16sp"
+                android:nextFocusDown="@+id/editText"
+                android:inputType="text|textNoSuggestions|textMultiLine"
+                android:focusableInTouchMode="true"
+                android:background="@android:color/transparent" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -52,7 +80,6 @@
                 android:layout_marginTop="20dp"
                 android:text="Description"
                 android:textColor="@color/label"
-                android:textStyle="bold"
                 android:textSize="14sp" />
 
             <EditText
@@ -62,7 +89,6 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
-                android:inputType="textCapSentences"
                 android:background="@android:color/transparent"
                 android:hint="More details about question"
                 android:textColor="@color/black"
@@ -72,7 +98,8 @@
             <ImageView
                 android:id="@+id/my_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 android:layout_marginTop="20dp"
                 android:src="@mipmap/image" />
         </LinearLayout>

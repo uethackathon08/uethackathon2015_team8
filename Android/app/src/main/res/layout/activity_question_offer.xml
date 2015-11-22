@@ -25,9 +25,8 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/post_question_main" />
+        <include layout="@layout/content_post_question" />
 
-        <include layout="@layout/content_post_offer" />
     </LinearLayout>
 
 
